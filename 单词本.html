@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语单词本</title>
+<style>
+  :root {
+    --today-color: #e60012;
+    --today-bg: #fff0f1;
+    --today-border: #ff4d4f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: #f5f7fa;
+    color: #2c3e50;
+    line-height: 1.7;
+    padding: 24px;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    padding: 40px 48px;
+  }
+  h1 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #8899aa;
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e8ecf1;
+  }
+  .letter-group {
+    margin: 12px 0 6px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #4a6fa5;
+  }
+  .word-card {
+    padding: 14px 18px;
+    margin: 6px 0 10px;
+    border-left: 4px solid #d0d7de;
+    border-radius: 0 8px 8px 0;
+    background: #fafbfc;
+    transition: all 0.2s;
+  }
+  .word-card:hover { background: #f0f4f8; }
+  .word-card.today {
+    border-left-color: var(--today-border);
+    background: var(--today-bg);
+  }
+  .word-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .word-name {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .word-card.today .word-name { color: var(--today-color); }
+  .word-pos {
+    font-size: 13px;
+    color: #8899aa;
+    background: #eef1f5;
+    padding: 1px 8px;
+    border-radius: 4px;
+  }
+  .word-card.today .word-pos {
+    background: #ffe0e0;
+    color: #c00;
+  }
+  .word-phonetic {
+    font-size: 14px;
+    color: #6a7b8c;
+  }
+  .word-card.today .word-phonetic { color: #e60012; }
+  .word-body { margin-top: 4px; }
+  .word-meaning {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 4px;
+  }
+  .word-example {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    padding-left: 8px;
+    border-left: 2px solid #d0d7de;
+  }
+  .word-card.today .word-example { border-left-color: #ff4d4f; }
+  .word-example .cn {
+    font-style: normal;
+    color: #999;
+    display: block;
+    margin-top: 2px;
+  }
+  .word-date {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 6px;
+  }
+  /* ═══ 搜索栏 ═══ */
+  .search-bar {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .search-input {
+    width: 100%;
+    padding: 12px 44px 12px 16px;
+    font-size: 15px;
+    border: 2px solid #e0e5ea;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fafbfc;
+  }
+  .search-input:focus { border-color: #4a6fa5; background: #fff; }
+  .search-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+    pointer-events: none;
+  }
+  .search-results {
+    font-size: 13px;
+    color: #8899aa;
+    margin-bottom: 8px;
+    display: none;
+  }
+  .search-results.visible { display: block; }
+  /* ═══ 跳转高亮 ═══ */
+  .word-card.jump-highlight {
+    animation: flashHighlight 0.6s ease-in-out 3;
+  }
+  @keyframes flashHighlight {
+    0%, 100% { background: #fafbfc; border-left-color: #d0d7de; }
+    50% { background: #fff7b0; border-left-color: #f5a623; }
+  }
+  .word-card.today.jump-highlight {
+    animation: flashHighlightToday 0.6s ease-in-out 3;
+  }
+  @keyframes flashHighlightToday {
+    0%, 100% { background: var(--today-bg); border-left-color: var(--today-border); }
+    50% { background: #ffeaa7; border-left-color: #f5a623; }
+  }
+  /* ═══ 无结果提示 ═══ */
+  .no-result {
+    display: none;
+    text-align: center;
+    padding: 24px;
+    color: #aaa;
+    font-size: 14px;
+  }
+  .no-result.visible { display: block; }
+  .hidden { display: none !important; }
+  .today-badge {
+    display: inline-block;
+    background: #e60012;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .stats {
+    margin-top: 36px;
+    padding: 20px;
+    background: #f8f9fb;
+    border-radius: 8px;
+  }
+  .stats table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .stats th, .stats td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e8ecf1;
+  }
+  .stats th { color: #8899aa; font-weight: 600; }
+  .footer {
+    text-align: center;
+    color: #bbb;
+    font-size: 12px;
+    margin-top: 20px;
+  }
+  /* ═══ Tab 切换栏 ═══ */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e8ecf1;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #8899aa;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    margin-bottom: -2px;
+  }
+  .tab-btn:hover { color: #4a6fa5; }
+  .tab-btn.active {
+    color: #4a6fa5;
+    border-bottom-color: #4a6fa5;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  /* ═══ 商务句卡片 ═══ */
+  .sentence-card {
+    padding: 20px 24px;
+    margin: 10px 0 16px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f0f5ff 0%, #fafbfc 100%);
+    border: 1px solid #dce6f5;
+  }
+  .sentence-en {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  .sentence-cn {
+    font-size: 15px;
+    color: #667;
+    margin-bottom: 14px;
+    padding-left: 8px;
+    border-left: 3px solid #4a6fa5;
+  }
+  .sentence-notes-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4a6fa5;
+    margin-bottom: 8px;
+  }
+  .sentence-notes {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+  }
+  .sentence-notes b {
+    color: #2c3e50;
+  }
+  .sentence-notes em {
+    color: #8899aa;
+    font-style: normal;
+    font-size: 13px;
+  }
+  .sentence-date {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 12px;
+  }
+  .sentence-scene {
+    display: inline-block;
+    background: #e8f0fe;
+    color: #4a6fa5;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .sentence-card.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>📖 英语单词本</h1>
+<p class="subtitle">每日积累 · 港口工程 + 职场用语 · 最后更新：2026-06-02</p>
+
+<!-- ═══════════ Tab 切换栏 ═══════════ -->
+<div class="tab-bar">
+  <button class="tab-btn active" id="tabBtnWords" onclick="switchTab('words')">📖 每日单词</button>
+  <button class="tab-btn" id="tabBtnSentences" onclick="switchTab('sentences')">💬 每日一句</button>
+</div>
+
+<!-- ═══════════ 搜索栏 ═══════════ -->
+<div class="search-bar">
+  <input class="search-input" id="searchInput" type="text" placeholder="🔍 搜索单词或中文词义，支持模糊匹配……" autocomplete="off">
+  <span class="search-icon">⌕</span>
+</div>
+<div class="search-results" id="searchResults"></div>
+<div class="no-result" id="noResult">😕 没有找到匹配的单词，换个关键词试试？</div>
+
+<!-- ═══════════ Tab 1: 每日单词 ═══════════ -->
+<div id="tab-words" class="tab-content active">
+
+<!-- ═══════════ 港口工程类 ═══════════ -->
+<div class="section-title">一、🏗️ 港口工程类</div>
+
+<div class="letter-group">B</div>
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">bollard</span>
+    <span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈbɒləd/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">缆柱；系船柱；安装于码头上用于系固船舶缆绳的短圆柱形构件，是港口靠泊设施的核心组成部分</div>
+    <div class="word-example">
+      <i>The mooring lines were secured to the bollards on the quay before the vessel was declared berthed.</i>
+      <span class="cn">在宣告船舶靠泊前，系泊缆绳已固定在码头的缆柱上。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 bollard 在城市里是防车桩，在码头上是系缆柱——同样的圆柱形，一个挡车，一个拴船。港口设计图必现词。</div>
+  </div>
+  <div class="word-date">收录：2026-06-02</div>
+</div>
+
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">bulkhead</span>
+    <span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈbʌlkˌhɛd/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">舱壁；隔墙；船舶内分隔各舱室的垂直结构，亦指港口护岸工程中的挡土/挡水板桩墙</div>
+    <div class="word-example">
+      <i>A steel bulkhead was installed along the waterfront to retain the reclaimed fill behind the quay.</i>
+      <span class="cn">沿海岸线安装了钢板桩护岸挡墙，以支挡码头后方的吹填土体。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 bulk（船货）+ head（头/端面）→ 分隔货舱的"墙头"；在港口工程中也指护岸板桩结构——两个场景都要记。</div>
+  </div>
+  <div class="word-date">收录：2026-06-02</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">bathymetry</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/bəˈθɪmɪtri/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">水深测量；对水体（海洋、港口、河道）深度的系统测量与制图，是港口勘察和航道设计的基础工作</div>
+    <div class="word-example">
+      <i>A detailed bathymetric survey of the harbor approach was completed before dredging commenced.</i>
+      <span class="cn">在疏浚开始前，对港口进出航道进行了详细的水深测量。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 bathy-（希腊语"深"）+ -metry（测量），就像 thermometry（测温）一样——bathymetry 是"测深术"，海图上的等深线全靠它。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">breakwater</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈbreɪkˌwɔːtə(r)/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">防波堤；建于港口外侧抵御海浪、保护港内水域平静的构筑物</div>
+    <div class="word-example">
+      <i>A rubble-mound breakwater was constructed to shield the inner harbor from rough seas.</i>
+      <span class="cn">建造了一座堆石防波堤，以保护内港免受汹涌海浪的冲击。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 break（打破）+ water（水）→ 把海浪"打碎"的堤坝，构词直白。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">berth</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/bɜːθ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">泊位，船舶停靠的位置；使靠泊，停靠</div>
+    <div class="word-example">
+      <i>The vessel was assigned berth No. 3 upon arrival at the terminal.</i>
+      <span class="cn">船舶抵达码头后被分配至3号泊位。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-27</div>
+</div>
+
+<div class="letter-group">C</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">cofferdam</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈkɒfəˌdæm/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">围堰；施工时在水中建造的临时挡水结构，排水后在干燥环境内进行水下基础施工</div>
+    <div class="word-example">
+      <i>A steel sheet-pile cofferdam was erected around the pier foundation to allow dry construction.</i>
+      <span class="cn">在桥墩基础周围竖立了钢板桩围堰，以便在干燥环境中进行施工。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 coffer（箱子）+ dam（坝）→ 一个"箱形围坝"把水挡在外面；港口码头和桥梁基础施工必用词。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">consignment</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/kənˈsaɪnmənt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">托运货物；寄售批次；一批交付运输或寄售的货物</div>
+    <div class="word-example">
+      <i>The consignment of steel pipes arrived at the port two days late due to bad weather.</i>
+      <span class="cn">由于恶劣天气，这批钢管货物延误两天才抵达港口。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-28</div>
+</div>
+
+<div class="letter-group">D</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">dredge</span>
+    <span class="word-pos">v. / n.</span>
+    <span class="word-phonetic">/drɛdʒ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">疏浚，用挖泥机清除水底淤泥；挖泥船，疏浚机</div>
+    <div class="word-example">
+      <i>They need to dredge the navigation channel before the rainy season.</i>
+      <span class="cn">他们需要在雨季前对航道进行疏浚。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-27</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">dredging</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈdredʒɪŋ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">疏浚；挖泥（作业）；用挖泥船清除水底淤泥或沉积物以维持或加深航道水深</div>
+    <div class="word-example">
+      <i>The dredging operation in the harbor channel was completed ahead of schedule.</i>
+      <span class="cn">港口航道的疏浚作业提前完成。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-28</div>
+</div>
+
+<div class="letter-group">F</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">fender</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈfendə(r)/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">护舷；安装于船舷或码头侧面、用于缓冲船舶靠泊时碰撞力的弹性装置</div>
+    <div class="word-example">
+      <i>Rubber fenders were installed along the quay wall to protect vessels during berthing.</i>
+      <span class="cn">码头墙上安装了橡胶护舷，以保护船舶靠泊时不受碰撞损坏。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 fend = 抵御，fender = 抵御碰撞的"缓冲器"，与汽车保险杠同词——都是挡撞用的。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="letter-group">G</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">geotechnical</span>
+    <span class="word-pos">adj.</span>
+    <span class="word-phonetic">/ˌdʒiːəʊˈteknɪk(ə)l/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">岩土工程的；与土壤、岩石的力学特性及其在工程中的应用相关的</div>
+    <div class="word-example">
+      <i>A geotechnical survey was carried out to assess the bearing capacity of the seabed.</i>
+      <span class="cn">进行了岩土勘察，以评估海床承载能力。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 geo（地球）+ technical（技术）→ "地的技术"，岩土工程必备词，港口基础设计离不开它。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="letter-group">M</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">marine</span>
+    <span class="word-pos">adj. / n.</span>
+    <span class="word-phonetic">/məˈriːn/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">海洋的，海运的；与海洋、船舶或港口工程相关</div>
+    <div class="word-example">
+      <i>The marine engineer conducted an underwater inspection of the pier foundation.</i>
+      <span class="cn">海洋工程师对码头基础进行了水下检查。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 与 marina（游艇码头）同根，marine = 一切跟海有关的，港口工程文件高频词。</div>
+  </div>
+  <div class="word-date">收录：2026-05-29</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">mooring</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈmʊərɪŋ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">系泊；将船固定在码头或锚地的缆绳、锚链及设施（mooring line：系泊缆绳）</div>
+    <div class="word-example">
+      <i>The mooring lines were checked before the typhoon to ensure the vessel remained secured.</i>
+      <span class="cn">台风来临前检查了系泊缆绳，确保船舶牢固固定。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 moor = 把船固定住，mooring = 系泊的整套动作或设施，港口工程图纸上必现词。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="letter-group">N</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">navigation</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˌnævɪˈɡeɪʃ(ə)n/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">航行；导航；航道通行（navigation channel：通航航道）</div>
+    <div class="word-example">
+      <i>The navigation channel depth must be maintained at 12 meters for container vessels.</i>
+      <span class="cn">通航航道水深必须保持在12米，以满足集装箱船的通航需求。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 源自拉丁语 navis（船），与 navy（海军）同根，港口设计必用词。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="letter-group">P</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">pile</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/paɪl/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">桩；桩基；打桩；将荷载传递至承载土层的柱状构件，港口码头和桥梁基础工程的核心结构元素</div>
+    <div class="word-example">
+      <i>Steel piles were driven into the seabed to form the foundation of the new container terminal.</i>
+      <span class="cn">将钢桩打入海底，形成新集装箱码头的基础。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 pile（桩）和 pile（堆）是同一个词——打桩就是把柱子一根根"堆"进地里；港口结构设计的核心词。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="letter-group">Q</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">quay</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/kiː/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">码头，装卸货物或供船舶停靠的硬质岸边构筑物</div>
+    <div class="word-example">
+      <i>The crane on the quay unloaded the cargo containers within three hours.</i>
+      <span class="cn">码头上的起重机在三小时内完成了集装箱货物的卸载。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 发音同 key（钥匙），码头是港口的"钥匙"入口。</div>
+  </div>
+  <div class="word-date">收录：2026-05-29</div>
+</div>
+
+<div class="letter-group">R</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">retaining wall</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/rɪˈteɪnɪŋ wɔːl/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">挡土墙；防止土体侧向滑动的支护结构，广泛用于港口岸线、道路边坡及码头后方填土区域的支挡</div>
+    <div class="word-example">
+      <i>A reinforced concrete retaining wall was constructed along the quay edge to hold back the reclaimed land.</i>
+      <span class="cn">在码头边缘修建了一道钢筋混凝土挡土墙，以支撑吹填陆域。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 retain = 保持/留住，retaining wall = 把土"留住"的墙 → 挡土墙；港口陆域形成工程中必现词。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="letter-group">S</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">seawall</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈsiːwɔːl/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">海堤，防波堤；建于海岸线防止海浪侵蚀和洪水的防护结构</div>
+    <div class="word-example">
+      <i>The seawall was reinforced with concrete blocks to withstand storm surges.</i>
+      <span class="cn">海堤用混凝土块加固，以承受风暴潮的冲击。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 sea（海）+ wall（墙）= 海墙 → 海堤，构词直观。</div>
+  </div>
+  <div class="word-date">收录：2026-05-29</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">silt</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/sɪlt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">淤泥，细沙；淤积（silt up：因淤泥堆积而堵塞）</div>
+    <div class="word-example">
+      <i>The harbor entrance silted up after the monsoon season and required urgent dredging.</i>
+      <span class="cn">季风季节过后，港口入口淤积，需要紧急疏浚。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-27</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">sediment</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈsɛdɪmənt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">沉积物；泥沙；悬浮在水中并最终沉积于水底的细小颗粒物质</div>
+    <div class="word-example">
+      <i>The engineers monitored sediment accumulation in the navigation channel after the flood season.</i>
+      <span class="cn">汛期过后，工程师对通航航道内的泥沙淤积情况进行了监测。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 sed- 源自拉丁语"坐下"（同 sit），sediment = 沉下来的物质 → 沉积物；港口水工报告必现词。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="letter-group">T</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">tidal</span>
+    <span class="word-pos">adj.</span>
+    <span class="word-phonetic">/ˈtaɪd(ə)l/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">潮汐的；受潮汐影响的；与潮汐有关的</div>
+    <div class="word-example">
+      <i>Navigation in this tidal channel requires careful planning based on the tide tables.</i>
+      <span class="cn">在这条受潮汐影响的航道中航行，需要根据潮汐表仔细规划。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-28</div>
+</div>
+
+<div class="letter-group">W</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">wharf</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/wɔːf/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">码头，货运码头；供船舶停靠、装卸货物的水边平台结构（与 quay 近义，wharf 更强调木质或简易结构）</div>
+    <div class="word-example">
+      <i>Timber was unloaded at the wharf and transported directly to the construction site.</i>
+      <span class="cn">木材在货运码头卸货后直接运至施工现场。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 wharf 与 quay 都是码头——quay 多指石砌或混凝土岸壁，wharf 则包括木质栈桥式结构；港口图纸上两词经常并列出现，注意区分。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<!-- ═══════════ 职场用语类 ═══════════ -->
+<div class="section-title">二、💼 职场用语类</div>
+
+<div class="letter-group">A</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">agenda</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/əˈdʒɛndə/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">议程；会议上将要讨论的事项列表；某人推进的目标或计划</div>
+    <div class="word-example">
+      <i>The project kick-off meeting agenda included site inspection and risk assessment.</i>
+      <span class="cn">项目启动会的议程包括现场勘查和风险评估。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 拉丁语"待办之事"，有 agenda 开会才有方向。</div>
+  </div>
+  <div class="word-date">收录：2026-05-29</div>
+</div>
+
+<div class="letter-group">B</div>
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">benchmark</span>
+    <span class="today-badge">今日</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/ˈbɛntʃmɑːk/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">基准；参照标准；衡量绩效、成本或质量的参考值；以基准衡量（benchmark against：与标准对比）</div>
+    <div class="word-example">
+      <i>The project cost was benchmarked against similar harbor construction projects in Southeast Asia.</i>
+      <span class="cn">该项目造价参照了东南亚同类港口建设项目的基准数据进行对比。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 bench（工作台）+ mark（标记）→ 工人在台上刻下的参考刻度；引申为"一切比较的基准点"，投标报价、绩效考核常用词。</div>
+  </div>
+  <div class="word-date">收录：2026-06-02</div>
+</div>
+
+<div class="letter-group">C</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">compliance</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/kəmˈplaɪəns/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">合规；遵守法规、标准或合同要求的状态或行为</div>
+    <div class="word-example">
+      <i>The contractor must demonstrate compliance with local environmental regulations before construction begins.</i>
+      <span class="cn">承包商必须在开工前证明其符合当地环保法规的要求。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 来自动词 comply（遵守），国际工程项目中 compliance 决定项目能否获批。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">contingency</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/kənˈtɪndʒ(ə)nsi/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">应急措施；意外事件；为可能发生的情况预先准备的人、财、物（contingency plan：应急预案）</div>
+    <div class="word-example">
+      <i>A 10% contingency budget was allocated for unforeseen ground conditions during dredging.</i>
+      <span class="cn">预留了10%的应急预算，以应对疏浚过程中可能出现的地质意外情况。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 工程合同中的高频词，contingency = 以防万一的"安全垫"。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">correspondence</span>
+    <span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˌkɒrɪˈspɒndəns/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">往来函件；通信；书信联络；（正式）信函往来（official correspondence：正式往来文件）</div>
+    <div class="word-example">
+      <i>All project correspondence with the client must be documented and filed for future reference.</i>
+      <span class="cn">与业主的所有项目往来函件必须记录存档，以备日后查阅。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 correspond = 通信/对应，correspondence = 通信的全部往来记录；国际工程中函件管理至关重要，是合同索赔的证据链。</div>
+  </div>
+  <div class="word-date">收录：2026-06-02</div>
+</div>
+
+<div class="letter-group">D</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">deadline</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈdɛdlaɪn/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">截止日期；必须完成任务或提交成果的最后时间节点</div>
+    <div class="word-example">
+      <i>We must submit the design drawings before the deadline or face penalty clauses.</i>
+      <span class="cn">我们必须在截止日期前提交设计图纸，否则将面临违约罚款。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 dead（死）+ line（线），越过这条线就"死"了——逾期出局。</div>
+  </div>
+  <div class="word-date">收录：2026-05-29</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">deliverable</span>
+    <span class="word-pos">n. / adj.</span>
+    <span class="word-phonetic">/dɪˈlɪv(ə)rəb(ə)l/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">可交付成果；项目合同中规定须按期提交的文件、报告、图纸或实物成果</div>
+    <div class="word-example">
+      <i>The engineering report is a key deliverable due at the end of the first project phase.</i>
+      <span class="cn">工程报告是第一阶段结束时须提交的关键可交付成果。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 deliver（交付）+ -able（可以的）→ 能交出去的东西；项目管理中 deliverable 就是"你欠甲方的"。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="letter-group">E</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">escalate</span>
+    <span class="word-pos">v.</span>
+    <span class="word-phonetic">/ˈɛskəleɪt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">升级；使问题逐级上报；使事态（冲突、成本、风险）扩大或加剧（escalate an issue：将问题上报上级）</div>
+    <div class="word-example">
+      <i>The site engineer escalated the structural concern to the project director after the first inspection.</i>
+      <span class="cn">现场工程师在第一次检查后将结构隐患上报给了项目总监。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 escalator（自动扶梯）→ 问题沿扶梯"向上走"就是 escalate，职场中遇到解决不了的问题要"升级上报"。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">expedite</span>
+    <span class="word-pos">v.</span>
+    <span class="word-phonetic">/ˈɛkspɪdaɪt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">加快，加速（某事的进展）；使更快完成</div>
+    <div class="word-example">
+      <i>The project manager asked the team to expedite the permit approval process.</i>
+      <span class="cn">项目经理要求团队加快许可证审批流程。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-27</div>
+</div>
+
+<div class="letter-group">H</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">handover</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/ˈhændˌəʊvə(r)/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">移交；竣工移交；将项目成果、文件或职责正式转交给另一方（project handover：项目移交）</div>
+    <div class="word-example">
+      <i>The project handover ceremony was held on schedule, and all as-built drawings were submitted to the client.</i>
+      <span class="cn">项目移交仪式按时举行，所有竣工图纸均已提交给业主。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 hand（手）+ over（交过去）→ 亲手把东西交给对方；工程竣工阶段最重要的动作，也是收尾款的前提。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="letter-group">I</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">invoice</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/ˈɪnvɔɪs/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">发票；费用清单；开具发票、发出付款请求</div>
+    <div class="word-example">
+      <i>The contractor submitted the monthly progress invoice for the quay construction work.</i>
+      <span class="cn">承包商提交了码头施工的月度进度付款发票。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 与 bill 不同，invoice 是正式商业发票，工程项目付款流程的起点。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="letter-group">L</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">liaison</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/liˈeɪzɒn/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">联络；协调沟通；联络员</div>
+    <div class="word-example">
+      <i>She acts as the liaison between the client and the engineering team on site.</i>
+      <span class="cn">她担任现场客户与工程团队之间的联络人。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-27</div>
+</div>
+
+<div class="letter-group">M</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">milestone</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈmaɪlstəʊn/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">里程碑；项目中标志重要进展阶段的关键时间节点或成果（milestone plan：里程碑计划）</div>
+    <div class="word-example">
+      <i>Completing the pile foundation works on time was a critical milestone for the entire project schedule.</i>
+      <span class="cn">按时完成桩基工程是整个项目进度计划中的关键里程碑。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 古代道路边标示距离的石碑 → 引申为人生或项目中"走了多远"的标记；milestone = 检验进度的"里程石"。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">mitigation</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˌmɪtɪˈɡeɪʃ(ə)n/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">缓解；减轻；采取措施降低风险、损害或不利影响的程度（mitigation measure：减缓措施）</div>
+    <div class="word-example">
+      <i>The environmental impact report proposed several mitigation measures to reduce sedimentation in the channel.</i>
+      <span class="cn">环境影响报告提出了若干减缓措施，以降低航道泥沙淤积。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 mitigate = 使缓和，mitigation 是名词，EIA（环评）文件里的核心词——出了问题要"减缓"。</div>
+  </div>
+  <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="letter-group">P</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">procurement</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/prəˈkjʊərmənt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">采购；获取；通过正式流程购买或取得商品、服务的过程</div>
+    <div class="word-example">
+      <i>The procurement department issued a tender for the supply of buoys and navigation aids.</i>
+      <span class="cn">采购部门就浮标和助航设备发出了招标公告。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-28</div>
+</div>
+
+<div class="letter-group">S</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">scope</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/skəʊp/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">范围；（工程项目的）工作范围；某事物所涉及或影响的边界（scope of work：工作范围）</div>
+    <div class="word-example">
+      <i>Any changes beyond the agreed scope of work must be handled as a variation order.</i>
+      <span class="cn">超出约定工作范围的任何变更须以变更令方式处理。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 与望远镜 telescope 同根（-scope = 看、观察范围），project scope = 项目"能看见的边界"；签合同前必须搞清楚的词。</div>
+  </div>
+  <div class="word-date">收录：2026-06-01</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">stakeholder</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈsteɪkˌhəʊldə(r)/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">利益相关方；在某项目或决策中有利益关系的个人或组织</div>
+    <div class="word-example">
+      <i>Regular meetings were held with all stakeholders to ensure the project aligned with local regulations.</i>
+      <span class="cn">与所有利益相关方定期召开会议，以确保项目符合当地法规。</span>
+    </div>
+  </div>
+  <div class="word-date">收录：2026-05-28</div>
+</div>
+
+<div class="letter-group">V</div>
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">variance</span>
+    <span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈveərɪəns/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">偏差；差异；与计划或标准之间的差值（cost variance：成本偏差；schedule variance：进度偏差）</div>
+    <div class="word-example">
+      <i>The project manager reviewed the cost variance report and found actual expenses 12% above budget.</i>
+      <span class="cn">项目经理审阅了成本偏差报告，发现实际费用超出预算12%。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 vary（变化）→ variance = 变化量/偏差；项目管理和统计学都用这个词——偏离了基准就叫 variance。</div>
+  </div>
+  <div class="word-date">收录：2026-06-02</div>
+</div>
+
+<!-- ═══════════ 统计 ═══════════ -->
+<div class="stats">
+  <table>
+    <tr><th>类别</th><th>单词数</th><th>最新更新</th></tr>
+    <tr><td>港口工程类</td><td>21</td><td>2026-06-02</td></tr>
+    <tr><td>职场用语类</td><td>19</td><td>2026-06-02</td></tr>
+    <tr><td><b>合计</b></td><td><b>40</b></td><td><b>2026-06-02</b></td></tr>
+  </table>
+</div>
+
+<p class="footer">本单词本由每日英语单词自动化任务生成，持续更新中……</p>
+
+</div><!-- /tab-words -->
+
+<!-- ═══════════ Tab 2: 每日一句 ═══════════ -->
+<div id="tab-sentences" class="tab-content">
+
+<div class="sentence-card" id="sent-0" data-en="Could you please confirm receipt of the attached technical proposal at your earliest convenience?" data-cn="请在你方便的时候尽早确认收到附件中的技术方案。" data-notes="confirm receipt at your earliest convenience technical proposal 确认收悉 技术方案 商务邮件 请求确认">
+  <div class="sentence-scene">📧 商务邮件 · 请求确认</div>
+  <div class="sentence-en">Could you please confirm receipt of the attached technical proposal at your earliest convenience?</div>
+  <div class="sentence-cn">请在你方便的时候尽早确认收到附件中的技术方案。</div>
+  <div class="sentence-notes-title">📝 重点词注释</div>
+  <div class="sentence-notes">
+    <b>confirm receipt</b> <em>/kənˈfɜːm rɪˈsiːt/</em> — 确认收悉；商务邮件中用于请对方确认已收到文件的正式表达。<br>
+    <b>at your earliest convenience</b> <em>/æt jɔːr ˈɜːliɪst kənˈviːniəns/</em> — 在你方便时尽早；比 "as soon as possible" 更礼貌、更正式，常用于对外商务函件。<br>
+    <b>technical proposal</b> <em>/ˈteknɪk(ə)l prəˈpəʊz(ə)l/</em> — 技术方案；工程项目投标和沟通中的核心文件。
+  </div>
+  <div class="sentence-date">收录：2026-06-02</div>
+</div>
+
+<p class="footer">商务英语每日一句，积少成多，沟通更专业。</p>
+
+</div><!-- /tab-sentences -->
+
+</div>
+
+<script>
+// ═══ Tab 切换 ═══
+var currentTab = 'words';
+
+function switchTab(tab) {
+  currentTab = tab;
+  var wordsTab = document.getElementById('tab-words');
+  var sentencesTab = document.getElementById('tab-sentences');
+  var btnWords = document.getElementById('tabBtnWords');
+  var btnSentences = document.getElementById('tabBtnSentences');
+  var searchInput = document.getElementById('searchInput');
+
+  if (tab === 'words') {
+    wordsTab.classList.add('active');
+    sentencesTab.classList.remove('active');
+    btnWords.classList.add('active');
+    btnSentences.classList.remove('active');
+    if (searchInput) searchInput.placeholder = '🔍 搜索单词或中文词义，支持模糊匹配……';
+  } else {
+    wordsTab.classList.remove('active');
+    sentencesTab.classList.add('active');
+    btnWords.classList.remove('active');
+    btnSentences.classList.add('active');
+    if (searchInput) searchInput.placeholder = '🔍 搜索英文句子或中文释义，支持模糊匹配……';
+  }
+
+  // 清空搜索
+  if (searchInput) { searchInput.value = ''; }
+  var results = document.getElementById('searchResults');
+  var noResult = document.getElementById('noResult');
+  if (results) { results.classList.remove('visible'); results.textContent = ''; }
+  if (noResult) noResult.classList.remove('visible');
+
+  // 恢复所有元素可见
+  resetAllWords();
+  resetAllSentences();
+}
+
+(function() {
+  // 等待 DOM 就绪
+  function init() {
+    var wordCards = document.querySelectorAll('#tab-words .word-card');
+    var sentenceCards = document.querySelectorAll('#tab-sentences .sentence-card');
+    var sectionTitles = document.querySelectorAll('#tab-words .section-title');
+    var letterGroups = document.querySelectorAll('#tab-words .letter-group');
+    var input = document.getElementById('searchInput');
+    var results = document.getElementById('searchResults');
+    var noResult = document.getElementById('noResult');
+    var timer = null;
+
+    if (!input) { console.warn('searchInput not found'); return; }
+
+    // 给单词卡片加上 id
+    wordCards.forEach(function(c, i) { c.id = 'word-' + i; });
+    // 给商务句卡片加上 id
+    sentenceCards.forEach(function(c, i) { c.id = 'sent-' + i; });
+
+    function resetAllWords() {
+      wordCards.forEach(function(c) { c.classList.remove('hidden', 'jump-highlight'); });
+      sectionTitles.forEach(function(s) { s.classList.remove('hidden'); });
+      letterGroups.forEach(function(g) { g.classList.remove('hidden'); });
+    }
+
+    function resetAllSentences() {
+      sentenceCards.forEach(function(c) { c.classList.remove('hidden', 'jump-highlight'); });
+    }
+
+    function resetAll() {
+      resetAllWords();
+      resetAllSentences();
+      results.classList.remove('visible');
+      results.textContent = '';
+      noResult.classList.remove('visible');
+    }
+
+    function fuzzyMatch(text, query) {
+      var t = text.toLowerCase();
+      var q = query.toLowerCase();
+      return t.indexOf(q) !== -1;
+    }
+
+    function scrollToCard(card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('jump-highlight');
+      setTimeout(function() { card.classList.remove('jump-highlight'); }, 2000);
+    }
+
+    // ═══ 搜索：单词 Tab ═══
+    function searchWords(query) {
+      var matched = [];
+      wordCards.forEach(function(c) {
+        var nameEl = c.querySelector('.word-name');
+        var meaningEl = c.querySelector('.word-meaning');
+        var name = nameEl ? nameEl.textContent : '';
+        var meaning = meaningEl ? meaningEl.textContent : '';
+        if (fuzzyMatch(name, query) || fuzzyMatch(meaning, query)) {
+          matched.push(c);
+        }
+      });
+
+      if (matched.length === 0) { return false; }
+
+      if (matched.length === 1) {
+        resetAll();
+        scrollToCard(matched[0]);
+        results.classList.add('visible');
+        results.textContent = '找到 1 个匹配，已自动跳转';
+      } else {
+        wordCards.forEach(function(c) { c.classList.add('hidden'); });
+        sectionTitles.forEach(function(s) { s.classList.add('hidden'); });
+        letterGroups.forEach(function(g) { g.classList.add('hidden'); });
+
+        matched.forEach(function(c) {
+          c.classList.remove('hidden');
+          var prev = c.previousElementSibling;
+          while (prev) {
+            if (prev.classList && prev.classList.contains('section-title')) { prev.classList.remove('hidden'); }
+            if (prev.classList && prev.classList.contains('letter-group')) { prev.classList.remove('hidden'); break; }
+            prev = prev.previousElementSibling;
+          }
+        });
+
+        var html = '找到 <b>' + matched.length + '</b> 个匹配单词：';
+        matched.forEach(function(c) {
+          var nameEl = c.querySelector('.word-name');
+          var name = nameEl ? nameEl.textContent : '';
+          html += ' <a href="#" class="search-link" data-idx="' + c.id + '" style="margin:0 4px;color:#4a6fa5;text-decoration:underline;cursor:pointer;">' + name + '</a>';
+        });
+        results.innerHTML = html;
+        results.classList.add('visible');
+
+        results.querySelectorAll('.search-link').forEach(function(a) {
+          a.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = a.getAttribute('data-idx');
+            var target = document.getElementById(id);
+            if (target) {
+              resetAllWords();
+              scrollToCard(target);
+              results.classList.remove('visible');
+            }
+          });
+        });
+      }
+      return true;
+    }
+
+    // ═══ 搜索：商务句 Tab ═══
+    function searchSentences(query) {
+      var matched = [];
+      sentenceCards.forEach(function(c) {
+        var en = c.getAttribute('data-en') || '';
+        var cn = c.getAttribute('data-cn') || '';
+        var notes = c.getAttribute('data-notes') || '';
+        if (fuzzyMatch(en, query) || fuzzyMatch(cn, query) || fuzzyMatch(notes, query)) {
+          matched.push(c);
+        }
+      });
+
+      if (matched.length === 0) { return false; }
+
+      sentenceCards.forEach(function(c) { c.classList.add('hidden'); });
+
+      matched.forEach(function(c) { c.classList.remove('hidden'); });
+
+      if (matched.length === 1) {
+        scrollToCard(matched[0]);
+        results.classList.add('visible');
+        results.textContent = '找到 1 个匹配，已自动跳转';
+      } else {
+        var html = '找到 <b>' + matched.length + '</b> 个匹配句子：';
+        matched.forEach(function(c) {
+          var en = c.getAttribute('data-en') || '';
+          var label = en.length > 40 ? en.substring(0, 40) + '…' : en;
+          html += ' <a href="#" class="search-link" data-idx="' + c.id + '" style="margin:0 4px;color:#4a6fa5;text-decoration:underline;cursor:pointer;">' + label + '</a>';
+        });
+        results.innerHTML = html;
+        results.classList.add('visible');
+
+        results.querySelectorAll('.search-link').forEach(function(a) {
+          a.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = a.getAttribute('data-idx');
+            var target = document.getElementById(id);
+            if (target) {
+              resetAllSentences();
+              scrollToCard(target);
+              results.classList.remove('visible');
+            }
+          });
+        });
+      }
+      return true;
+    }
+
+    input.addEventListener('input', function() {
+      clearTimeout(timer);
+      var query = input.value.trim();
+      if (!query) { resetAll(); return; }
+
+      timer = setTimeout(function() {
+        var found = false;
+
+        if (currentTab === 'words') {
+          resetAllSentences();
+          found = searchWords(query);
+          if (!found) {
+            resetAllWords();
+            wordCards.forEach(function(c) { c.classList.add('hidden'); });
+            sectionTitles.forEach(function(s) { s.classList.add('hidden'); });
+            letterGroups.forEach(function(g) { g.classList.add('hidden'); });
+          }
+        } else {
+          resetAllWords();
+          found = searchSentences(query);
+        }
+
+        if (!found) {
+          results.classList.remove('visible');
+          noResult.classList.add('visible');
+        } else {
+          noResult.classList.remove('visible');
+        }
+      }, 250);
+    });
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        clearTimeout(timer);
+        var query = input.value.trim();
+        if (!query) return;
+        var first = results.querySelector('.search-link');
+        if (first) first.click();
+      }
+      if (e.key === 'Escape') {
+        input.value = '';
+        resetAll();
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</div>
+</body>
+</html>
