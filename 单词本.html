@@ -207,6 +207,38 @@
     font-size: 12px;
     margin-top: 20px;
   }
+  /* ═══ 分类快捷导航 ═══ */
+  .cat-nav {
+    display: none;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .cat-nav.visible { display: flex; }
+  .cat-nav-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid #e0e5ec;
+    border-radius: 8px;
+    background: #fff;
+    color: #667;
+    transition: all 0.2s;
+  }
+  .cat-nav-btn:hover {
+    border-color: #4a6fa5;
+    color: #4a6fa5;
+    background: #f5f8fc;
+  }
+  .cat-nav-btn.active {
+    border-color: #4a6fa5;
+    background: #4a6fa5;
+    color: #fff;
+  }
   /* ═══ Tab 切换栏 ═══ */
   .tab-bar {
     display: flex;
@@ -227,6 +259,7 @@
     border-bottom: 3px solid transparent;
     transition: all 0.2s;
     margin-bottom: -2px;
+    white-space: nowrap;
   }
   .tab-btn:hover { color: #4a6fa5; }
   .tab-btn.active {
@@ -235,6 +268,49 @@
   }
   .tab-content { display: none; }
   .tab-content.active { display: block; }
+  /* ═══ Tab 下拉菜单 ═══ */
+  .tab-dropdown-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+  }
+  .tab-dropdown-wrapper .tab-btn {
+    width: 100%;
+  }
+  .tab-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #e0e5ec;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    z-index: 100;
+    min-width: 160px;
+    padding: 4px 0;
+    margin-top: 2px;
+  }
+  .tab-dropdown-menu.visible { display: block; }
+  .tab-dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    border: none;
+    background: #fff;
+    color: #445;
+    transition: background 0.15s;
+  }
+  .tab-dropdown-item:hover {
+    background: #f0f5ff;
+    color: #4a6fa5;
+  }
+  .tab-dropdown-item:first-child { border-radius: 8px 8px 0 0; }
+  .tab-dropdown-item:last-child { border-radius: 0 0 8px 8px; }
   /* ═══ 商务句卡片 ═══ */
   .sentence-card {
     padding: 20px 24px;
@@ -292,17 +368,53 @@
     margin-bottom: 8px;
   }
   .sentence-card.hidden { display: none !important; }
+  /* ═══ 返回顶部按钮 ═══ */
+  .back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: #4a6fa5;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(74,111,165,0.35);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 200;
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .back-to-top:hover {
+    background: #3d5d8a;
+    box-shadow: 0 6px 18px rgba(74,111,165,0.5);
+    transform: translateY(-2px);
+  }
 </style>
 </head>
 <body>
 <div class="container">
 
 <h1>📖 英语单词本</h1>
-<p class="subtitle">每日积累 · 港口工程 + 职场用语 · 最后更新：2026-06-02</p>
+<p class="subtitle">每日积累 · 港口工程 + 职场用语 · 最后更新：2026-06-03</p>
 
 <!-- ═══════════ Tab 切换栏 ═══════════ -->
 <div class="tab-bar">
-  <button class="tab-btn active" id="tabBtnWords" onclick="switchTab('words')">📖 每日单词</button>
+  <div class="tab-dropdown-wrapper" id="tabWordsWrapper">
+    <button class="tab-btn active" id="tabBtnWords" onclick="switchTab('words')">📖 每日单词&nbsp;▾</button>
+    <div class="tab-dropdown-menu" id="tabWordsDropdown">
+      <button class="tab-dropdown-item" onclick="jumpToCat('harbor')">🏗️ 港口工程类</button>
+      <button class="tab-dropdown-item" onclick="jumpToCat('office')">💼 职场用语类</button>
+    </div>
+  </div>
   <button class="tab-btn" id="tabBtnSentences" onclick="switchTab('sentences')">💬 每日一句</button>
 </div>
 
@@ -317,14 +429,39 @@
 <!-- ═══════════ Tab 1: 每日单词 ═══════════ -->
 <div id="tab-words" class="tab-content active">
 
-<!-- ═══════════ 港口工程类 ═══════════ -->
-<div class="section-title">一、🏗️ 港口工程类</div>
+<!-- ═══════════ 分类快捷导航 ═══════════ -->
+<div class="cat-nav" id="catNav">
+  <button class="cat-nav-btn active" onclick="selectCat('all')" data-cat="all">📋 全部</button>
+  <button class="cat-nav-btn" onclick="selectCat('harbor')" data-cat="harbor">🏗️ 港口工程类</button>
+  <button class="cat-nav-btn" onclick="selectCat('office')" data-cat="office">💼 职场用语类</button>
+</div>
 
-<div class="letter-group">B</div>
+<!-- ═══════════ 港口工程类 ═══════════ -->
+<div class="section-title" id="sec-harbor">一、🏗️ 港口工程类</div>
+
+<div class="letter-group">A</div>
 <div class="word-card today">
   <div class="word-head">
-    <span class="word-name">bollard</span>
+    <span class="word-name">apron</span>
     <span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈeɪprən/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">码头前沿作业区；码头面板后缘至前沿之间的货物装卸和堆存区域；也指机场停机坪</div>
+    <div class="word-example">
+      <i>Cranes were repositioned along the apron to accommodate the additional cargo vessels.</i>
+      <span class="cn">门机沿码头前沿作业区重新布置，以适应新增的货运船舶。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 apron 本义是"围裙"，码头前沿就是码头"穿上围裙干活"的区域——堆货、装卸、行驶车辆都在这里。港口布局设计核心词。</div>
+  </div>
+  <div class="word-date">收录：2026-06-03</div>
+</div>
+
+<div class="letter-group">B</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">bollard</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈbɒləd/</span>
   </div>
@@ -339,10 +476,9 @@
   <div class="word-date">收录：2026-06-02</div>
 </div>
 
-<div class="word-card today">
+<div class="word-card">
   <div class="word-head">
     <span class="word-name">bulkhead</span>
-    <span class="today-badge">今日</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈbʌlkˌhɛd/</span>
   </div>
@@ -408,6 +544,24 @@
 </div>
 
 <div class="letter-group">C</div>
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">caisson</span>
+    <span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈkeɪs(ə)n/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">沉箱；用于港口码头、桥墩等水工结构的大型空心箱形构件，沉入水底后内部填充混凝土形成基础</div>
+    <div class="word-example">
+      <i>Concrete caissons were prefabricated on shore and then floated to the construction site for sinking.</i>
+      <span class="cn">混凝土沉箱在岸上预制后，被浮运至施工现场进行沉放。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 caisson 源自法语"箱子"，港口码头沉箱基础施工必现词。想象一个巨大的空心盒子沉到海底再灌满混凝土——就是 caisson。</div>
+  </div>
+  <div class="word-date">收录：2026-06-03</div>
+</div>
+
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">cofferdam</span>
@@ -508,6 +662,25 @@
     <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 geo（地球）+ technical（技术）→ "地的技术"，岩土工程必备词，港口基础设计离不开它。</div>
   </div>
   <div class="word-date">收录：2026-05-30</div>
+</div>
+
+<div class="letter-group">J</div>
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">jetty</span>
+    <span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈdʒɛti/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">突堤；导堤；从海岸向水域延伸的堤坝结构，用于引导水流、保护航道或提供靠泊设施</div>
+    <div class="word-example">
+      <i>A training jetty was built at the harbor entrance to stabilize the navigation channel.</i>
+      <span class="cn">在港口入口处修建了导流堤，以稳定通航航道。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 jet = 喷射/突出，jetty = 向水中"突出"的堤——和 breakwater 的区别：breakwater 挡浪，jetty 引流兼靠泊。</div>
+  </div>
+  <div class="word-date">收录：2026-06-03</div>
 </div>
 
 <div class="letter-group">M</div>
@@ -704,7 +877,7 @@
 </div>
 
 <!-- ═══════════ 职场用语类 ═══════════ -->
-<div class="section-title">二、💼 职场用语类</div>
+<div class="section-title" id="sec-office">二、💼 职场用语类</div>
 
 <div class="letter-group">A</div>
 <div class="word-card">
@@ -725,10 +898,9 @@
 </div>
 
 <div class="letter-group">B</div>
-<div class="word-card today">
+<div class="word-card">
   <div class="word-head">
     <span class="word-name">benchmark</span>
-    <span class="today-badge">今日</span>
     <span class="word-pos">n. / v.</span>
     <span class="word-phonetic">/ˈbɛntʃmɑːk/</span>
   </div>
@@ -778,10 +950,9 @@
   <div class="word-date">收录：2026-05-30</div>
 </div>
 
-<div class="word-card today">
+<div class="word-card">
   <div class="word-head">
     <span class="word-name">correspondence</span>
-    <span class="today-badge">今日</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˌkɒrɪˈspɒndəns/</span>
   </div>
@@ -797,6 +968,24 @@
 </div>
 
 <div class="letter-group">D</div>
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">delegation</span>
+    <span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˌdɛlɪˈɡeɪʃ(ə)n/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">委派；授权；任务分配；将职责或权力分配给下级的过程（delegate：委派/授权）</div>
+    <div class="word-example">
+      <i>Effective delegation of tasks among team members is essential for meeting project milestones.</i>
+      <span class="cn">在团队成员间有效委派任务对于实现项目里程碑至关重要。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 de-（向下）+ legate（派遣）→ 把任务"向下派遣"出去；项目管理中善用 delegation 才能并行推进，一个人扛不住整个项目。</div>
+  </div>
+  <div class="word-date">收录：2026-06-03</div>
+</div>
+
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">deadline</span>
@@ -1004,11 +1193,29 @@
   <div class="word-date">收录：2026-05-28</div>
 </div>
 
-<div class="letter-group">V</div>
+<div class="letter-group">R</div>
 <div class="word-card today">
   <div class="word-head">
-    <span class="word-name">variance</span>
+    <span class="word-name">requisition</span>
     <span class="today-badge">今日</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/ˌrɛkwɪˈzɪʃ(ə)n/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">请购单；正式需求申请；向采购部门或管理层提交的物资、设备或服务获取请求</div>
+    <div class="word-example">
+      <i>The site manager submitted a material requisition for 200 tons of cement to complete the quay extension.</i>
+      <span class="cn">现场经理提交了一份200吨水泥的物资请购单，用于完成码头延伸段施工。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 re-（反复）+ quisit（寻求）+ -ion → 反复寻求 → 正式请购/需求申请；工程项目中买东西的正式流程叫 requisition，不是随便喊一声"买水泥"。</div>
+  </div>
+  <div class="word-date">收录：2026-06-03</div>
+</div>
+
+<div class="letter-group">V</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">variance</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈveərɪəns/</span>
   </div>
@@ -1027,9 +1234,9 @@
 <div class="stats">
   <table>
     <tr><th>类别</th><th>单词数</th><th>最新更新</th></tr>
-    <tr><td>港口工程类</td><td>21</td><td>2026-06-02</td></tr>
-    <tr><td>职场用语类</td><td>19</td><td>2026-06-02</td></tr>
-    <tr><td><b>合计</b></td><td><b>40</b></td><td><b>2026-06-02</b></td></tr>
+    <tr><td>港口工程类</td><td>24</td><td>2026-06-03</td></tr>
+    <tr><td>职场用语类</td><td>21</td><td>2026-06-03</td></tr>
+    <tr><td><b>合计</b></td><td><b>45</b></td><td><b>2026-06-03</b></td></tr>
   </table>
 </div>
 
@@ -1059,7 +1266,89 @@
 
 </div>
 
+<button class="back-to-top" id="backToTop" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
 <script>
+// ═══ 当前选中的分类筛选（仅搜索时使用） ═══
+var currentCat = 'all';
+
+// ═══ 下拉菜单：从"每日单词"Tab跳转到分类 ═══
+function jumpToCat(cat) {
+  var target = document.getElementById('sec-' + cat);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // 关闭下拉菜单
+  var dropdown = document.getElementById('tabWordsDropdown');
+  if (dropdown) dropdown.classList.remove('visible');
+}
+
+// ═══ 搜索时的分类筛选 ═══
+function selectCat(cat) {
+  currentCat = cat;
+  // 更新按钮状态
+  document.querySelectorAll('.cat-nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  var targetBtn = document.querySelector('.cat-nav-btn[data-cat="' + cat + '"]');
+  if (targetBtn) targetBtn.classList.add('active');
+
+  // 搜索时直接按分类重新过滤
+  triggerSearch();
+}
+
+// ═══ 触发搜索 ═══
+function triggerSearch() {
+  var input = document.getElementById('searchInput');
+  if (input) {
+    var evt = new Event('input', { bubbles: true });
+    input.dispatchEvent(evt);
+  }
+}
+
+// ═══ 判断卡片属于哪个分类 ═══
+function getCardCategory(card) {
+  var prev = card.previousElementSibling;
+  while (prev) {
+    if (prev.id === 'sec-harbor') return 'harbor';
+    if (prev.id === 'sec-office') return 'office';
+    if (prev.classList && prev.classList.contains('section-title')) return null;
+    prev = prev.previousElementSibling;
+  }
+  return null;
+}
+
+// ═══ Tab 下拉菜单：hover 显示/隐藏 ═══
+(function() {
+  var wrapper = document.getElementById('tabWordsWrapper');
+  var dropdown = document.getElementById('tabWordsDropdown');
+  var hideTimer = null;
+
+  if (wrapper && dropdown) {
+    wrapper.addEventListener('mouseenter', function() {
+      clearTimeout(hideTimer);
+      dropdown.classList.add('visible');
+    });
+    wrapper.addEventListener('mouseleave', function() {
+      hideTimer = setTimeout(function() {
+        dropdown.classList.remove('visible');
+      }, 200);
+    });
+  }
+})();
+
+// ═══ 返回顶部按钮：滚动时显示/隐藏 ═══
+(function() {
+  var btn = document.getElementById('backToTop');
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        if (window.scrollY > 400) { btn.classList.add('visible'); }
+        else { btn.classList.remove('visible'); }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+
 // ═══ Tab 切换 ═══
 var currentTab = 'words';
 
@@ -1104,6 +1393,7 @@ function switchTab(tab) {
     var sentenceCards = document.querySelectorAll('#tab-sentences .sentence-card');
     var sectionTitles = document.querySelectorAll('#tab-words .section-title');
     var letterGroups = document.querySelectorAll('#tab-words .letter-group');
+    var catNav = document.getElementById('catNav');
     var input = document.getElementById('searchInput');
     var results = document.getElementById('searchResults');
     var noResult = document.getElementById('noResult');
@@ -1120,6 +1410,7 @@ function switchTab(tab) {
       wordCards.forEach(function(c) { c.classList.remove('hidden', 'jump-highlight'); });
       sectionTitles.forEach(function(s) { s.classList.remove('hidden'); });
       letterGroups.forEach(function(g) { g.classList.remove('hidden'); });
+      if (catNav) catNav.classList.remove('visible');
     }
 
     function resetAllSentences() {
@@ -1149,7 +1440,14 @@ function switchTab(tab) {
     // ═══ 搜索：单词 Tab ═══
     function searchWords(query) {
       var matched = [];
+      var catFilter = currentCat; // 'all', 'harbor', 'office'
+
       wordCards.forEach(function(c) {
+        // 分类筛选
+        if (catFilter !== 'all') {
+          var cardCat = getCardCategory(c);
+          if (cardCat !== catFilter) return;
+        }
         var nameEl = c.querySelector('.word-name');
         var meaningEl = c.querySelector('.word-meaning');
         var name = nameEl ? nameEl.textContent : '';
@@ -1161,11 +1459,15 @@ function switchTab(tab) {
 
       if (matched.length === 0) { return false; }
 
+      // 搜索时显示分类导航作为筛选器
+      if (catNav) catNav.classList.add('visible');
+
       if (matched.length === 1) {
-        resetAll();
+        resetAllWords();
         scrollToCard(matched[0]);
         results.classList.add('visible');
-        results.textContent = '找到 1 个匹配，已自动跳转';
+        var catLabel = catFilter === 'all' ? '' : (' [' + (catFilter === 'harbor' ? '港口工程类' : '职场用语类') + ']');
+        results.textContent = '找到 1 个匹配' + catLabel + '，已自动跳转';
       } else {
         wordCards.forEach(function(c) { c.classList.add('hidden'); });
         sectionTitles.forEach(function(s) { s.classList.add('hidden'); });
@@ -1181,7 +1483,8 @@ function switchTab(tab) {
           }
         });
 
-        var html = '找到 <b>' + matched.length + '</b> 个匹配单词：';
+        var catLabel = catFilter === 'all' ? '' : (' [' + (catFilter === 'harbor' ? '港口工程类' : '职场用语类') + ']');
+        var html = '找到 <b>' + matched.length + '</b> 个匹配单词' + catLabel + '：';
         matched.forEach(function(c) {
           var nameEl = c.querySelector('.word-name');
           var name = nameEl ? nameEl.textContent : '';
@@ -1270,6 +1573,8 @@ function switchTab(tab) {
             wordCards.forEach(function(c) { c.classList.add('hidden'); });
             sectionTitles.forEach(function(s) { s.classList.add('hidden'); });
             letterGroups.forEach(function(g) { g.classList.add('hidden'); });
+            // 搜索无结果时保持导航可见，方便切换分类
+            if (catNav) catNav.classList.add('visible');
           }
         } else {
           resetAllWords();
