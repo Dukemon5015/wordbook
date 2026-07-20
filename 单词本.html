@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -148,6 +148,18 @@
     display: none;
   }
   .search-results.visible { display: block; }
+  .search-link {
+    display: inline-block;
+    padding: 2px 6px;
+    margin: 2px 3px;
+    border-radius: 4px;
+    background: #f0f4f8;
+    color: #4a6fa5;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .search-link:hover { background: #e0eaf5; color: #2a4f85; }
   /* ═══ 跳转高亮 ═══ */
   .word-card.jump-highlight {
     animation: flashHighlight 0.6s ease-in-out 3;
@@ -444,7 +456,7 @@
 <div class="container">
 
 <h1>📖 英语单词本</h1>
-<p class="subtitle">每日积累 · 港口工程 + 职场用语 · 最后更新：2026-07-10</p>
+<p class="subtitle">每日积累 · 港口工程 + 职场用语 · 最后更新：2026-07-17</p>
 
 <!-- ═══════════ Tab 切换栏 ═══════════ -->
 <div class="tab-bar">
@@ -487,9 +499,9 @@
 <div class="section-title" id="sec-harbor">一、🏗️ 港口工程类</div>
 
 <div class="letter-group">A</div>
-<div class="word-card today">
+<div class="word-card">
   <div class="word-head">
-    <span class="word-name">aggregate</span><span class="today-badge">今日</span>
+    <span class="word-name">aggregate</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈæɡrɪɡət/</span>
   </div>
@@ -502,6 +514,23 @@
     <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 aggreg（聚集）+ ate =「把散碎聚在一起的东西」。混凝土三大成分：水、水泥、骨料。骨料占体积最大，比通项目用海砂时要注意氯离子含量。</div>
   </div>
   <div class="word-date">收录：2026-07-10</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">anchor</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/ˈæŋkər/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">锚；锚固；船舶系泊用的重型钢制器具，通过锚链或缆绳与船体连接并沉入水底抓持底质，使船舶在锚地固定位置；也指结构锚固件（anchor bolt：地脚螺栓；anchor block：锚定块；anchor chain：锚链；drag anchor：走锚）</div>
+    <div class="word-example">
+      <i>The vessel dropped anchor at the outer anchorage and waited for the pilot boat before proceeding to the berth.</i>
+      <span class="cn">船舶在外锚地抛锚，等待引航艇后驶入泊位。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 anchor 本义是"钩住"——钢铁爪子钩住海底泥沙固定船位。港口工程中 anchor 既是系泊设备，也是结构固定概念（anchor bolt = 地脚螺栓）。走锚（drag anchor）是大风天最大安全隐患之一。</div>
+  </div>
+  <div class="word-date">收录：2026-07-16</div>
 </div>
 
 <div class="word-card">
@@ -540,6 +569,22 @@
 </div>
 
 <div class="letter-group">B</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">backfill</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/ˈbækˌfɪl/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">回填；回填土；在挡土墙、基础或管沟等结构施工完成后，将土石材料重新填入开挖区域的工序，回填质量直接影响沉降和稳定性（backfill material：回填材料；compacted backfill：压实回填；select backfill：精选回填料）</div>
+    <div class="word-example">
+      <i>The backfill behind the quay wall must be compacted in layers to achieve the specified density before the pavement is applied.</i>
+      <span class="cn">码头岸壁后方的回填料必须分层压实至规定密实度，方可铺设面层。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 back（回）+ fill（填）→"填回去"。开挖后把土填回去就是 backfill。挡土墙背后回填必须分层压实（compacted in layers），否则后期沉降会导致路面开裂。港口陆域形成工程核心工序。</div>
+  </div>
+  <div class="word-date">收录：2026-07-16</div>
+</div>
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">beam</span>
@@ -591,6 +636,22 @@
 </div>
 
 
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">berthing</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/bɜːrðɪŋ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">靠泊；系泊作业——船舶停靠码头并系缆固定的整个过程（berthing operation：靠泊作业；berthing velocity：靠泊速度；breasting dolphin：靠船墩）</div>
+    <div class="word-example">
+      <i>The pilot boarded the vessel two miles offshore to guide the berthing maneuver alongside the newly completed quay.</i>
+      <span class="cn">引航员在离岸两海里处登轮，引导船舶靠泊于新建成的码头。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 berth（泊位）+ ing →「靠泊」动作。比通项目里大型散货船靠泊要计算潮流和风速，码头上的系缆桩（bollard）和护舷（fender）就是为 berthing 服务的。</div>
+  </div>
+  <div class="word-date">收录：2026-07-11</div>
+</div>
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">bollard</span>
@@ -742,6 +803,23 @@
   </div>
   <div class="word-date">收录：2026-07-08</div>
 </div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">buoyancy</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈbɔɪənsi/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">浮力；物体在流体中所受的垂直向上的支持力，其大小等于物体所排开流体的重量，是船舶载重计算、浮式结构物（如浮码头、浮船坞、浮吊）设计及稳性分析的基本物理参数（buoyancy force：浮力；reserve buoyancy：储备浮力；buoyancy tank：浮力舱）</div>
+    <div class="word-example">
+      <i>The floating dock's reserve buoyancy allows it to remain stable even when the crane load is applied asymmetrically during heavy lift operations.</i>
+      <span class="cn">浮码头的储备浮力使其在进行不对称重型吊装作业时仍能保持稳定。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 buoy（浮起）+ -ancy（性质后缀）→「能浮起来的力」。源自 Archimedes（阿基米德）原理。港口浮式结构设计第一步就是算 buoyancy——吃水多少、载重多少都从这里出发。</div>
+  </div>
+  <div class="word-date">收录：2026-07-15</div>
+</div>
+
 
 <div class="letter-group">C</div>
 <div class="word-card">
@@ -792,6 +870,22 @@
     <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 catamaran 源自泰米尔语 kattumaram（绑在一起的木头）→ 双体船。比通客船码头项目中，设计船型若为 catamaran，泊位宽度和靠泊设施需特殊考虑。</div>
   </div>
   <div class="word-date">收录：2026-06-16</div>
+</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">causeway</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/kɔːzweɪ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">堤道；栈桥引道——连接陆地与海上结构（如人工岛、码头）的带状填筑道路，常建于浅水区（causeway embankment：堤道路堤；trestle causeway：栈桥式堤道）</div>
+    <div class="word-example">
+      <i>A temporary causeway was constructed to provide land access for equipment during the reclamation phase.</i>
+      <span class="cn">在吹填阶段修建了一条临时堤道，为设备提供陆路通道。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 cause（通道）+ way（路）→「通道式的路」。填海造陆时先用堤道把陆地和作业区连起来，人员和机械才能进场。</div>
+  </div>
+  <div class="word-date">收录：2026-07-11</div>
 </div>
 <div class="word-card">
   <div class="word-head">
@@ -961,6 +1055,22 @@
 </div>
 <div class="word-card">
   <div class="word-head">
+    <span class="word-name">crest</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/krest/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">堤顶；顶标高——防波堤、海堤等结构的最高点标高，是越浪和稳定性设计的关键控制高程（crest level：堤顶标高；crest width：堤顶宽度；freeboard：超高）</div>
+    <div class="word-example">
+      <i>The design crest level of the breakwater was raised by 0.5 m after the storm surge assessment.</i>
+      <span class="cn">经风暴潮评估后，防波堤的设计堤顶标高抬高了 0.5 米。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 crest 本义是「冠、顶峰」（如鸡冠），工程上就是堤的「头顶」高度。比通防波堤设计的命脉——堤顶越低越容易被浪越顶（overtopping）。</div>
+  </div>
+  <div class="word-date">收录：2026-07-11</div>
+</div>
+<div class="word-card">
+  <div class="word-head">
     <span class="word-name">culvert</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈkʌlvərt/</span>
@@ -1012,9 +1122,9 @@
 </div>
 
 <div class="letter-group">D</div>
-<div class="word-card today">
+<div class="word-card">
   <div class="word-head">
-    <span class="word-name">dewatering</span><span class="today-badge">今日</span>
+    <span class="word-name">dewatering</span>
     <span class="word-pos">n./v.</span>
     <span class="word-phonetic">/diːˈwɔːtərɪŋ/</span>
   </div>
@@ -1230,6 +1340,23 @@
   <div class="word-date">收录：2026-07-03</div>
 </div>
 
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">estuary</span><span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈestʃuˌeri/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">河口；河口湾；河流入海口处受潮汐影响、盐淡水混合的半封闭水域，常作为沿海港口选址和水文观测的关键区域（estuary environment：河口环境；tidal estuary：有潮河口；estuary dynamics：河口动力学）</div>
+    <div class="word-example">
+      <i>The new container terminal is being built along the estuary, where the salinity gradient and tidal currents require special foundation design considerations.</i>
+      <span class="cn">新建集装箱码头建在河口处，盐度梯度和潮流条件对基础设计提出了特殊要求。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 拉丁语 aestuarium（潮汐区）。estuary 是河流"汇入大海前的最后一段"——盐淡水交汇、泥沙淤积、生态敏感。港口选址若在河口，需要重点关注 salinity（盐度）、sediment（泥沙）和潮汐对结构的影响。</div>
+  </div>
+  <div class="word-date">收录：2026-07-17</div>
+</div>
+
 
 <div class="letter-group">F</div>
 <div class="word-card">
@@ -1348,6 +1475,23 @@
   </div>
   <div class="word-date">收录：2026-06-14</div>
 </div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">freeboard</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈfriːbɔːrd/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">干舷；出水高——水面到结构顶部（如甲板、码头面层、防波堤顶）的垂向距离，是码头和防波堤设计中确保极端高水位下结构安全的控制性参数（freeboard height：干舷高度；minimum freeboard：最小干舷）</div>
+    <div class="word-example">
+      <i>The quay wall freeboard was designed to provide a minimum clearance of 1.5 meters above the highest astronomical tide, accounting for wave run-up during monsoon storms.</i>
+      <span class="cn">码头的干舷设计在水面以上留有至少1.5米的超高，以应对天文最高潮位之上的波浪爬高和季风暴潮。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 free（自由的）+ board（板/船舷）→「水面以上的自由空间」。码头顶面标高 = 设计高水位 + 波高爬升 + 干舷余量。比通项目位于赤道无风带，但潮差达2米以上，干舷设计不可忽视。</div>
+  </div>
+  <div class="word-date">收录：2026-07-14</div>
+</div>
+
 <div class="letter-group">G</div>
 <div class="word-card">
   <div class="word-head">
@@ -1381,6 +1525,22 @@
   <div class="word-date">收录：2026-06-19</div>
 </div>
 
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">geogrid</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/dʒiːoʊɡrɪd/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">土工格栅——一种用于土体加筋的聚合物网格材料，提升路基、加筋土挡墙和地基的承载力与稳定性（geogrid reinforcement：格栅加筋；biaxial geogrid：双向格栅）</div>
+    <div class="word-example">
+      <i>A layer of biaxial geogrid was placed at the base of the embankment to control differential settlement.</i>
+      <span class="cn">在堤坝基底铺设了一层双向土工格栅，以控制差异沉降。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 geo（土）+ grid（格栅）→「土用的格栅」。和 geotextile（土工布）是兄弟——一个加筋、一个反滤排水，比通软基处理常一起用。</div>
+  </div>
+  <div class="word-date">收录：2026-07-12</div>
+</div>
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">geotechnical</span>
@@ -1547,6 +1707,23 @@
   </div>
   <div class="word-date">收录：2026-06-23</div>
 </div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">hull</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/hʌl/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">船体；船舶的主要外壳水密结构，由钢板或复合材料制成，是保证船舶浮力、稳性和强度的核心构件，损坏后将直接威胁船舶安全（hull form：船体型线；hull plate：船体钢板；double hull：双层船壳；hull damage：船体损伤）</div>
+    <div class="word-example">
+      <i>The pilot reported visible hull damage to the port authority, and the vessel was detained for underwater inspection before being allowed to berth.</i>
+      <span class="cn">引航员向港务局报告了可见的船体损伤，船舶被扣留进行水下检验后方可进港靠泊。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 hull 原义是「外壳、豆荚」——船的「豆荚壳」。港口工程中 hull 专指水下主体结构，与 superstructure（上部结构）成对。double hull（双壳）是油轮防泄漏的强制设计。</div>
+  </div>
+  <div class="word-date">收录：2026-07-15</div>
+</div>
+
 <div class="letter-group">I</div>
 <div class="word-card">
   <div class="word-head">
@@ -1714,6 +1891,23 @@
   </div>
   <div class="word-date">收录：2026-06-29</div>
 </div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">monsoon</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/mɒnˈsuːn/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">季风——由海陆热力差异驱动的季节性大尺度风向转变，伴随明显的干湿季交替，是印度尼西亚和东南亚地区气候的主导特征（northeast monsoon：东北季风/旱季；southwest monsoon：西南季风/雨季；monsoon season：季风季节）</div>
+    <div class="word-example">
+      <i>All offshore piling operations are scheduled during the dry northeast monsoon to avoid the heavy swell and reduced working windows of the rainy season.</i>
+      <span class="cn">所有离岸打桩作业均安排在干燥的东北季风期间进行，以避开雨季的大浪和有限作业窗口。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 源自阿拉伯语 mawsim（季节），经葡萄牙语传入英语。比通所在的北苏拉威西，12-3月为西北季风多雨，6-9月为东南季风干燥——施工总进度计划按季风周期编排。</div>
+  </div>
+  <div class="word-date">收录：2026-07-14</div>
+</div>
+
 
 <div class="word-card">
   <div class="word-head">
@@ -1832,6 +2026,23 @@
   </div>
   <div class="word-date">收录：2026-06-23</div>
 </div>
+<div class="letter-group">O</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">overtopping</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/oʊvərˈtɒpɪŋ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">越浪；漫顶——波浪越过防波堤或海堤顶部的现象，是堤体稳定性与后方安全的控制工况（wave overtopping：波浪越浪；overtopping discharge：越浪量）</div>
+    <div class="word-example">
+      <i>Numerical modeling showed unacceptable overtopping rates, so the crest was raised and armored with larger armor units.</i>
+      <span class="cn">数值模拟显示越浪率不可接受，因此抬高了堤顶并用更大的护面块体护面。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 over（越过）+ top（顶）+ ing →「越过顶部」。和 crest（堤顶）是天生一对：堤顶不够高，浪就 overtopping。</div>
+  </div>
+  <div class="word-date">收录：2026-07-12</div>
+</div>
 <div class="letter-group">P</div>
 <div class="word-card">
   <div class="word-head">
@@ -1935,6 +2146,22 @@
 </div>
 
 
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">precast</span>
+    <span class="word-pos">adj./n.</span>
+    <span class="word-phonetic">/priːˈkæst/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">预制的；预制件——在工厂或场外预先浇筑成型后运至现场安装的混凝土构件（precast element：预制构件；precast yard：预制场；cast in situ：现浇——反义）</div>
+    <div class="word-example">
+      <i>The pier deck was built using precast beams delivered by barge and lifted into place by the gantry crane.</i>
+      <span class="cn">码头面板采用预制梁，由驳船运抵后由门机吊装就位。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 pre（预先）+ cast（浇筑）→「提前浇筑」。比通项目大量用预制件（沉箱、梁、面板），比现浇快、质量稳，海上施工首选。</div>
+  </div>
+  <div class="word-date">收录：2026-07-12</div>
+</div>
 <div class="letter-group">Q</div>
 <div class="word-card">
   <div class="word-head">
@@ -1953,7 +2180,41 @@
   <div class="word-date">收录：2026-05-29</div>
 </div>
 
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">quay wall</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/kiː wɔːl/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">码头岸壁；码头前沿承受土压力和水压力的垂直挡土结构，是重力式码头、板桩码头和高桩码头的主要受力构件，直接承受船舶靠泊荷载和后方堆场荷载（quay wall design：岸壁设计；sheet pile quay wall：板桩岸壁；gravity quay wall：重力式岸壁）</div>
+    <div class="word-example">
+      <i>The cracks in the quay wall were detected during the underwater inspection, requiring immediate grouting to prevent further deterioration.</i>
+      <span class="cn">水下检查中发现码头岸壁存在裂缝，需要立即灌浆以防止进一步劣化。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 quay（码头）+ wall（墙）→ 码头那面"墙"。quay wall 是码头挡土结构的统称——重力式、板桩式、高桩式都有各自的 quay wall。港口结构巡检报告高频词。</div>
+  </div>
+  <div class="word-date">收录：2026-07-16</div>
+</div>
+
 <div class="letter-group">R</div>
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">ramp</span><span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ræmp/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">坡道；引桥；连接码头面与陆域或船舶与岸侧的倾斜通道，滚装码头、登陆设施和车辆上下船的关键构造（ramp way：坡道；ramp barge：登陆驳；roll-on/roll-off ramp：滚装坡道；loading ramp：装卸坡道）</div>
+    <div class="word-example">
+      <i>The reinforced concrete ramp connecting the Ro-Ro berth to the staging area must be designed to handle fully loaded trailers under all tidal conditions.</i>
+      <span class="cn">连接滚装泊位与堆场的钢筋混凝土坡道必须能够承受满载拖车在所有潮位条件下的通行。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 ramp 原意是"斜面/斜坡"。港口工程中 ramp 既指连接码头和陆域的车行引桥，也指登陆舰艇用的登陆坡道（ramp barge）。滚装码头（Ro-Ro）就是靠 ramp 把卡车开上开下船舶。</div>
+  </div>
+  <div class="word-date">收录：2026-07-17</div>
+</div>
+
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">reclamation</span>
@@ -2041,6 +2302,23 @@
 <div class="letter-group">S</div>
 <div class="word-card">
   <div class="word-head">
+    <span class="word-name">salinity</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/səˈlɪnəti/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">盐度；含盐量——水中溶解盐分的浓度（通常以千分比 ppt 或实用盐度单位 PSU 表示），是港口工程中混凝土配合比设计、钢结构防腐涂层选型和阴极保护参数确定的关键环境指标（high salinity environment：高盐度环境；salinity gradient：盐度梯度）</div>
+    <div class="word-example">
+      <i>Given the high salinity of the seawater at the project site, all reinforced concrete elements in the splash zone must use sulfate-resisting cement with a minimum cover of 75 mm.</i>
+      <span class="cn">鉴于项目所在地海水盐度高，浪溅区内所有钢筋混凝土构件必须采用抗硫酸盐水泥，且保护层厚度不小于75 mm。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 sal（盐，同 salt）+ inity → 盐度。热带海域盐度通常高于温带，比通项目海水盐度约33-35 ppt——对结构耐久性挑战大，混凝土保护层和涂层设计以此为基础参数。</div>
+  </div>
+  <div class="word-date">收录：2026-07-14</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
     <span class="word-name">sandbar</span>    <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈsændbɑː(r)/</span>
   </div>
@@ -2071,6 +2349,22 @@
   <div class="word-date">收录：2026-06-05</div>
 </div>
 
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">settlement</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/setlmənt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">沉降——地基或结构在荷载作用下随时间发生的竖向位移，是港口软基设计的核心控制指标（consolidation settlement：固结沉降；differential settlement：差异沉降；allowable settlement：容许沉降）</div>
+    <div class="word-example">
+      <i>Instrumentation recorded 80 mm of settlement at the quay after one year, within the design allowable limit.</i>
+      <span class="cn">监测仪器记录到码头一年后沉降 80 毫米，在设计容许限值以内。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 settle（下沉）+ ment →「沉安定下来」。比通软黏土厚，沉降预测（用 CPT/SPT 数据）直接决定码头标高预留多少。</div>
+  </div>
+  <div class="word-date">收录：2026-07-13</div>
+</div>
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">sheet pile</span>
@@ -2121,6 +2415,23 @@
   </div>
   <div class="word-date">收录：2026-06-18</div>
 </div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">shoreline</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈʃɔːrlaɪn/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">海岸线；滨线；水面与陆地交界的动态边线，受潮汐、波浪、风暴和侵蚀作用而持续变化，是港址选择、岸线演变分析和海岸防护设计的关键参考要素（shoreline erosion：海岸侵蚀；shoreline protection：海岸防护；shoreline change：岸线变化）</div>
+    <div class="word-example">
+      <i>The shoreline along the project site has retreated by approximately 30 meters over the past decade, prompting the design of a new revetment to protect the reclaimed land.</i>
+      <span class="cn">项目区段海岸线在过去十年间已后退约30米，因此设计中新增护岸以保护新吹填的土地。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 shore（岸）+ line（线）→「岸的那条线」。注意 shoreline 不是固定不变的——潮汐和风暴会持续改变它。港口选址前必须做 shoreline change analysis（岸线演变分析），比通项目尤其要考虑季风期的岸线后退趋势。</div>
+  </div>
+  <div class="word-date">收录：2026-07-15</div>
+</div>
+
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">sill</span>
@@ -2378,6 +2689,22 @@
 <div class="letter-group">T</div>
 <div class="word-card">
   <div class="word-head">
+    <span class="word-name">towage</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/toʊɪdʒ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">拖带；拖轮服务——用拖轮协助船舶靠离泊、移泊或海上拖曳的服务及费用（towage fee：拖带费；tug assistance：拖轮协助；escort towage：护航拖带）</div>
+    <div class="word-example">
+      <i>Towage by two harbour tugs was mandatory for the LNG carrier entering the confined basin.</i>
+      <span class="cn">LNG 船进入受限水域必须由两艘港作拖轮提供拖带协助。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 tow（拖）+ age（服务/费用后缀）→「拖带服务」。和 pilot（引航）、berthing 并称靠泊三件套，计费常单列在港口使费里。</div>
+  </div>
+  <div class="word-date">收录：2026-07-13</div>
+</div>
+<div class="word-card">
+  <div class="word-head">
     <span class="word-name">trestle</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈtrɛs(ə)l/</span>
@@ -2408,9 +2735,9 @@
   </div>
   <div class="word-date">收录：2026-05-28</div>
 </div>
-<div class="word-card today">
+<div class="word-card">
   <div class="word-head">
-    <span class="word-name">trim</span><span class="today-badge">今日</span>
+    <span class="word-name">trim</span>
     <span class="word-pos">n./v.</span>
     <span class="word-phonetic">/trɪm/</span>
   </div>
@@ -2493,6 +2820,23 @@
   <div class="word-date">收录：2026-07-08</div>
 </div>
 
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">toe</span><span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/toʊ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">坡脚；坝趾；边坡、堤坝或挡土墙底部与地基的交接位置，是边坡稳定分析中的关键控制点（toe protection：坡脚防护；toe of slope：坡脚；toe drain：坡脚排水；toe wall：趾墙）</div>
+    <div class="word-example">
+      <i>Scour protection must be installed at the toe of the quay wall to prevent undermining of the foundation during severe storm events.</i>
+      <span class="cn">必须在码头岸壁坡脚处设置防冲刷保护，以防止风暴期间基础被淘空。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 toe 就是"脚趾"——边坡最底部。港口护岸、堤防、挡土墙的"脚"最容易因冲刷（scour）失稳；toe protection（坡脚防护）是海岸工程巡视重点。复合词：toe wall（趾墙）、toe drain（坡脚排水沟）。</div>
+  </div>
+  <div class="word-date">收录：2026-07-17</div>
+</div>
+
 <div class="letter-group">U</div>
 <div class="word-card">
   <div class="word-head">
@@ -2527,6 +2871,22 @@
   </div>
   <div class="word-date">收录：2026-06-16</div>
 </div><div class="word-card">
+  <div class="word-head">
+    <span class="word-name">waterline</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/wɔːtərlaɪn/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">吃水线；水线——船体上与静水面相交的线，标示船舶装载后的浸入深度（load waterline：满载水线；waterline length：水线长；freeboard：干舷）</div>
+    <div class="word-example">
+      <i>The loaded waterline must clear the sill of the dock entrance by at least 0.5 m at low water.</i>
+      <span class="cn">满载吃水线在低水位时必须距离坞门闸槛至少 0.5 米。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 water（水）+ line（线）→「水线」。设计码头水深要看船舶 waterline 加富裕深度（under-keel clearance），比通潮差大更要算准。</div>
+  </div>
+  <div class="word-date">收录：2026-07-13</div>
+</div>
+<div class="word-card">
   <div class="word-head">
     <span class="word-name">waterway</span>    <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈwɔːtəweɪ/</span>
@@ -2683,6 +3043,39 @@
 
 <div class="word-card">
   <div class="word-head">
+    <span class="word-name">amend</span>
+    <span class="word-pos">v.</span>
+    <span class="word-phonetic">/əˈmend/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">修改；修正——对合同、文件、方案进行正式修订（amend the contract：修改合同；amended drawing：修订图纸；amendment：修正案）</div>
+    <div class="word-example">
+      <i>The employer requested to amend clause 12.3 to clarify the variation procedure before signing the agreement.</i>
+      <span class="cn">业主要求在签署协议前修改第 12.3 条，以明确变更程序。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 a（朝向）+ mend（修补）→「去修补好」。合同谈判高频词：amend 比 change 更正式，常搭配 amendment（修订案）。</div>
+  </div>
+  <div class="word-date">收录：2026-07-11</div>
+</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">annex</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈæneks/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">附件；附录——合同、报告或正式文件的补充部分，用于详细列出技术规格、价格清单或特殊条款（technical annex：技术附件；annex to the contract：合同附件；annexed document：附录文件）</div>
+    <div class="word-example">
+      <i>The technical annex to the main contract provides detailed specifications for the bearing capacity of the foundation piles and the concrete mix design parameters.</i>
+      <span class="cn">主合同的技术附件详细规定了基础桩的承载力要求和混凝土配合比设计参数。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 annex 本义是「附加、连接」——一份协议的「追加部分」。FIDIC 合同范本里，technical annex 往往比主合同还厚，技术条款全藏在附件里。投标报价和变更索赔都要逐字对照 annex。</div>
+  </div>
+  <div class="word-date">收录：2026-07-14</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
     <span class="word-name">appraisal</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/əˈpreɪz(ə)l/</span>
@@ -2731,9 +3124,9 @@
   </div>
   <div class="word-date">收录：2026-06-16</div>
 </div>
-<div class="word-card today">
+<div class="word-card">
   <div class="word-head">
-    <span class="word-name">audit</span><span class="today-badge">今日</span>
+    <span class="word-name">audit</span>
     <span class="word-pos">n./v.</span>
     <span class="word-phonetic">/ˈɔːdɪt/</span>
   </div>
@@ -2850,6 +3243,23 @@
   </div>
   <div class="word-date">收录：2026-06-23</div>
 </div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">circular</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈsɜːrkjələr/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">通告；通函——同时发送给多个接收者的官方通知或文件，用于在项目团队或组织内部传达政策、指令或重要信息（issue a circular：发布通告；internal circular：内部通告；circular memorandum：通函备忘录）</div>
+    <div class="word-example">
+      <i>The project director issued a circular to all subcontractors clarifying the updated HSE protocols for working within the intertidal zone during the monsoon season.</i>
+      <span class="cn">项目总监向所有分包商发布通告，明确了季风期间在潮间带作业的最新 HSE 规程。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 circul（圆/循环）+ ar → 让信息「循环流转」的文件。比群发邮件正式、比正式红头文件灵活——项目现场最常用的信息传达方式之一。</div>
+  </div>
+  <div class="word-date">收录：2026-07-14</div>
+</div>
+
 
 <div class="word-card">
   <div class="word-head">
@@ -2867,6 +3277,23 @@
   </div>
   <div class="word-date">收录：2026-06-25</div>
 </div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">comply</span>
+    <span class="word-pos">v.</span>
+    <span class="word-phonetic">/kəmˈplaɪ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">遵守；遵从；符合（规定、标准、合同条款）——合同履行中的核心动词，强调行为与既定要求一致，常与介词 with 连用（comply with the contract：遵守合同；comply with regulations：遵守规章；failure to comply：违规未遵守；non-complying work：不合格工程）</div>
+    <div class="word-example">
+      <i>All imported construction materials must comply with the Indonesian national standards (SNI) before being cleared by customs for use on the port project.</i>
+      <span class="cn">所有进口建筑材料必须符合印尼国家标准 (SNI)，方可在海关清关后用于港口项目。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 com-（共同/加强）+ ply（履行）→「一起去履行」既定的规定。合规管理（compliance management）的核心动词——合同里出现「comply with」就是「必须照做」，没有商量余地。</div>
+  </div>
+  <div class="word-date">收录：2026-07-15</div>
+</div>
+
 
 <div class="word-card">
   <div class="word-head">
@@ -3138,6 +3565,22 @@
 
 
 <div class="letter-group">E</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">empower</span>
+    <span class="word-pos">v.</span>
+    <span class="word-phonetic">/ɪmˈpaʊər/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">授权；赋能——给予团队或下属决策权限与资源支持（empower the team：赋能团队；empowerment：授权机制）</div>
+    <div class="word-example">
+      <i>The project director empowered the site manager to approve minor variations without escalating to headquarters.</i>
+      <span class="cn">项目总监授权现场经理可直接批准 minor 变更，无需上报总部。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 em（使动）+ power（权力）→「使有权力」。管理上和 delegate（委派）常并列——delegate 交任务，empower 给权限。</div>
+  </div>
+  <div class="word-date">收录：2026-07-11</div>
+</div>
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">escalate</span>
@@ -3503,9 +3946,9 @@
   </div>
   <div class="word-date">收录：2026-05-27</div>
 </div>
-<div class="word-card today">
+<div class="word-card">
   <div class="word-head">
-    <span class="word-name">logistics</span><span class="today-badge">今日</span>
+    <span class="word-name">logistics</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ləˈdʒɪstɪks/</span>
   </div>
@@ -3521,7 +3964,42 @@
 </div>
 
 
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">lobby</span><span class="today-badge">今日</span>
+    <span class="word-pos">v. / n.</span>
+    <span class="word-phonetic">/ˈlɒbi/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">v. 游说；向决策者施加影响以推动某项决定或政策；n. 大堂；游说团体——商务谈判、政府审批和项目协调中常用于表达"争取支持"的行为（lobby for：为…游说；lobby against：游说反对；lobby group：游说团体）</div>
+    <div class="word-example">
+      <i>The contractor intends to lobby the port authority for an extension of the dredging window beyond the environmental restriction period.</i>
+      <span class="cn">承包商打算游说港务局，将疏浚作业窗口期延长至环保限定期之外。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 lobby 源自英国议会大厅（lobby），指在议员的走廊（lobby）里拉票。现代商务中 lobby 既是"游说"也是"争取"，lobby for 是争取支持、lobby against 是反对某事。海外项目与当地政府/业主打交道的高频词。</div>
+  </div>
+  <div class="word-date">收录：2026-07-17</div>
+</div>
+
+
 <div class="letter-group">M</div>
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">mandate</span>
+    <span class="word-pos">n. / v.</span>
+    <span class="word-phonetic">/ˈmændeɪt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">n. 授权；指令；正式赋予某人执行某项任务的权力或职责；v. 强制要求；授权办理——常用于项目启动、政府审批和组织决策语境（project mandate：项目授权书；client mandate：业主授权；mandatory：强制性的；mandate to do sth：被授权做某事）</div>
+    <div class="word-example">
+      <i>Under the client's mandate, the project management consultant must obtain approval from the port authority before issuing any variation order above the contractual threshold.</i>
+      <span class="cn">根据业主授权，项目管理顾问在签发超过合同限额的任何变更令前，必须获得港务局批准。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 源自拉丁语 mandatum（命令）。mandate 比 order 更正式——是「被赋予的权威」，背后有组织或合同支撑。项目管理启动时往往先签 project mandate（项目章程），界定授权范围和决策权限。</div>
+  </div>
+  <div class="word-date">收录：2026-07-15</div>
+</div>
+
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">memorandum</span>
@@ -3728,6 +4206,22 @@
 
 <div class="word-card">
   <div class="word-head">
+    <span class="word-name">pitch</span>
+    <span class="word-pos">n./v.</span>
+    <span class="word-phonetic">/pɪtʃ/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">商业提案；推介——向客户或管理层推介方案、项目的正式陈述（make a pitch：做推介；sales pitch：销售说辞；pitch deck：推介材料）</div>
+    <div class="word-example">
+      <i>The consortium prepared a strong pitch to the port authority highlighting the local-content and delivery schedule advantages.</i>
+      <span class="cn">该联合体向港务局准备了一份有力的推介，突出本地化率和交付进度的优势。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 pitch 本义是「投掷、定调」，商务上就是「把方案抛给客户」。投标（tender）前常先 pitch 一次争取好感。</div>
+  </div>
+  <div class="word-date">收录：2026-07-12</div>
+</div>
+<div class="word-card">
+  <div class="word-head">
     <span class="word-name">precedent</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/ˈpresɪdənt/</span>
@@ -3791,6 +4285,24 @@
   </div>
   <div class="word-date">收录：2026-06-11</div>
 </div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">provision</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/prəˈvɪʒ(ə)n/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">条款；规定；合同或法规中针对特定事项设定的具体规则或安排；也指预先准备/供应（contract provision：合同条款；special provision：特殊条款；general provision：一般条款；make provision for：为…做准备）</div>
+    <div class="word-example">
+      <i>Under the provisions of the contract, the contractor is entitled to an extension of time if delays are caused by force majeure events.</i>
+      <span class="cn">根据合同条款规定，如果延误由不可抗力事件引起，承包商有权获得工期顺延。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 provide（提供/预备）→ provision = "预先准备的东西"。合同里"预先准备好的规则"就是 provision（条款）。与 clause（条款）近义但 provision 更强调"针对性规定"。合同管理高频词。</div>
+  </div>
+  <div class="word-date">收录：2026-07-16</div>
+</div>
+
 <div class="letter-group">Q</div>
 <div class="word-card">
   <div class="word-head">
@@ -3863,6 +4375,22 @@
 
 <div class="word-card">
   <div class="word-head">
+    <span class="word-name">streamline</span>
+    <span class="word-pos">v.</span>
+    <span class="word-phonetic">/striːmlaɪn/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">精简；优化流程——去除冗余环节使流程更高效（streamline the process：精简流程；streamline approvals：简化审批）</div>
+    <div class="word-example">
+      <i>We streamlined the submittal review by pre-agreeing templates with the engineer, cutting the cycle time by 40%.</i>
+      <span class="cn">我们与工程师预先约定模板，精简了报审流程，将周期缩短了 40%。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 stream（溪流）+ line（线）→「使像溪流一样顺畅」。项目管理常用——比通这种多层级审批，streamline 能直接救工期。</div>
+  </div>
+  <div class="word-date">收录：2026-07-13</div>
+</div>
+<div class="word-card">
+  <div class="word-head">
     <span class="word-name">submittal</span>
     <span class="word-pos">n.</span>
     <span class="word-phonetic">/səbˈmɪt(ə)l/</span>
@@ -3893,6 +4421,23 @@
     <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 sign（签字）+ off（完成/结束）→ "签完字就结束了" → 正式审批通过；比 approval 更口语化，工程项目中常说"Get the sign-off from…"，相当于"拿到XX的签字确认"。</div>
   </div>
   <div class="word-date">收录：2026-07-08</div>
+</div>
+
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">standpoint</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈstændˌpɔɪnt/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">立场；观点；看待问题或评估方案时所处的角度和立场，商务讨论中用于引出不同视角的分析（from a technical standpoint：从技术角度；from a commercial standpoint：从商业角度；from a practical standpoint：从实际角度）</div>
+    <div class="word-example">
+      <i>From a financial standpoint, the precast concrete option is more cost-effective despite the higher initial investment.</i>
+      <span class="cn">从财务角度来看，尽管初始投资更高，预制混凝土方案更具成本效益。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 stand（站）+ point（点）→"站的位置"= 看问题的角度。商务会议中经常用"from XX standpoint"引出不同部门/角色的视角，是汇报和讨论时的过渡句型。</div>
+  </div>
+  <div class="word-date">收录：2026-07-16</div>
 </div>
 
 <div class="letter-group">R</div>
@@ -3928,6 +4473,22 @@
   <div class="word-date">收录：2026-07-01</div>
 </div>
 
+<div class="word-card">
+  <div class="word-head">
+    <span class="word-name">reconcile</span>
+    <span class="word-pos">v.</span>
+    <span class="word-phonetic">/ˈrekənsaɪl/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">对账；核对——核对账目、数据或清单使其一致（reconcile accounts：对账；reconciliation statement：对账表；reconcile the quantities：核对工程量）</div>
+    <div class="word-example">
+      <i>The QS spent the weekend reconciling the measurement records with the contractor's monthly claim.</i>
+      <span class="cn">工料测量师周末都在把计量记录与承包商的月度索赔进行核对。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 re（重新）+ concile（调和）→「重新调和一致」。工程合同里 reconcile quantities 是进度款支付前的必经步骤。</div>
+  </div>
+  <div class="word-date">收录：2026-07-12</div>
+</div>
 <div class="word-card">
   <div class="word-head">
     <span class="word-name">rectify</span>
@@ -4052,6 +4613,22 @@
 <div class="letter-group">T</div>
 <div class="word-card">
   <div class="word-head">
+    <span class="word-name">tally</span>
+    <span class="word-pos">v./n.</span>
+    <span class="word-phonetic">/tæli/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">清点；统计——核对货物件数、逐项计数（tally sheet：计数单；tally clerk：理货员；tally the cargo：理货）</div>
+    <div class="word-example">
+      <i>The tally clerk reconciled the discharged cargo against the manifest before releasing the vessel.</i>
+      <span class="cn">理货员在船舶放行前，根据舱单对卸下货物逐件清点核对。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 源自古英语 talu（计数）→「数数」。港口理货（tally）是收货放行的第一道关，和 manifest（舱单）、reconcile（核对）是搭档。</div>
+  </div>
+  <div class="word-date">收录：2026-07-13</div>
+</div>
+<div class="word-card">
+  <div class="word-head">
     <span class="word-name">tender</span>
     <span class="word-pos">n. / v.</span>
     <span class="word-phonetic">/ˈtendər/</span>
@@ -4150,6 +4727,23 @@
   <div class="word-date">收录：2026-07-02</div>
 </div>
 
+<div class="word-card today">
+  <div class="word-head">
+    <span class="word-name">tactic</span><span class="today-badge">今日</span>
+    <span class="word-pos">n.</span>
+    <span class="word-phonetic">/ˈtæktɪk/</span>
+  </div>
+  <div class="word-body">
+    <div class="word-meaning">策略；手段；为实现特定目标而采取的具体行动方式，商务谈判、项目推进和变更索赔中常用 tactic 表达"打法"或"招数"（negotiation tactic：谈判策略；tactical：战术性的；delay tactics：拖延策略；divide and conquer tactic：各个击破策略）</div>
+    <div class="word-example">
+      <i>The contractor's delay tactics during the claim negotiation forced the client to escalate the matter to senior management.</i>
+      <span class="cn">承包商在索赔谈判中的拖延策略迫使业主将此事升级到高层处理。</span>
+    </div>
+    <div class="word-meaning" style="margin-top:6px;color:#888;font-size:13px;">💡 tactic（战术）+ strategy（战略）——strategy 是"大的方向"，tactic 是"具体的招"。商务谈判中的 hardball tactic（强硬策略）、good cop / bad cop tactic（红白脸策略）都是项目管理实战必备词汇。</div>
+  </div>
+  <div class="word-date">收录：2026-07-17</div>
+</div>
+
 
 <div class="word-card">
   <div class="word-head">
@@ -4205,9 +4799,9 @@
 <div class="stats">
   <table>
     <tr><th>类别</th><th>单词数</th><th>最新更新</th></tr>
-    <tr><td>港口工程类</td><td>126</td><td>2026-07-10</td></tr>
-    <tr><td>职场用语类</td><td>94</td><td>2026-07-10</td></tr>
-    <tr><td><b>合计</b></td><td><b>220</b></td><td><b>2026-07-10</b></td></tr>
+    <tr><td>港口工程类</td><td>147</td><td>2026-07-17</td></tr>
+    <tr><td>职场用语类</td><td>108</td><td>2026-07-17</td></tr>
+    <tr><td><b>合计</b></td><td><b>255</b></td><td><b>2026-07-17</b></td></tr>
   </table>
 </div>
 
@@ -4661,6 +5255,78 @@
 
 
 
+<div class="sentence-card" id="sent-34" data-en="The tally clerk streamlined the cargo count while the harbour tug completed the towage, ensuring the vessel's waterline stayed clear of the sill at low water." data-cn="理货员在港作拖轮完成拖带的同时精简了货物计数流程，确保船舶吃水线在低水位时仍高于坞门闸槛。" data-notes="tally streamline towage waterline 理货 精简 拖带 吃水线 现场沟通 港口运营">
+  <div class="sentence-scene">🏗️ 现场沟通 · 靠泊理货与计量</div>
+  <div class="sentence-en">The tally clerk streamlined the cargo count while the harbour tug completed the towage, ensuring the vessel's waterline stayed clear of the sill at low water.</div>
+  <div class="sentence-cn">理货员在港作拖轮完成拖带的同时精简了货物计数流程，确保船舶吃水线在低水位时仍高于坞门闸槛。</div>
+  <div class="sentence-notes-title">📝 重点词注释</div>
+  <div class="sentence-notes">
+    <b>tally</b> <em>/ˈtæli/</em> — 理货；清点——核对货物件数，放行前的第一道关<br>
+    <b>streamline</b> <em>/ˈstriːmlaɪn/</em> — 精简；优化流程——去除冗余环节提效<br>
+    <b>towage</b> <em>/ˈtoʊɪdʒ/</em> — 拖带；拖轮服务——拖轮协助船舶靠离泊<br>
+    <b>waterline</b> <em>/ˈwɔːtərlaɪn/</em> — 吃水线——船体与水面交线，标示装载深度
+  </div>
+  <div class="sentence-date">收录：2026-07-13</div>
+</div>
+
+<div class="sentence-card" id="sent-35" data-en="The annex to the contract specifies that the quay wall freeboard must account for monsoon storm surge levels, and concrete mix designs shall consider the high salinity environment to ensure long-term durability." data-cn="合同附件规定码头岸墙干舷高度必须考虑季风暴潮水位，且混凝土配合比设计应考虑高盐度环境以确保长期耐久性。" data-notes="annex freeboard monsoon salinity circular 附件 干舷 季风 盐度 现场沟通 材料耐久性">
+  <div class="sentence-scene">🏗️ 现场沟通 · 季风防护与结构耐久性</div>
+  <div class="sentence-en">The annex to the contract specifies that the quay wall freeboard must account for monsoon storm surge levels, and concrete mix designs shall consider the high salinity environment to ensure long-term durability.</div>
+  <div class="sentence-cn">合同附件规定码头岸墙干舷高度必须考虑季风暴潮水位，且混凝土配合比设计应考虑高盐度环境以确保长期耐久性。</div>
+  <div class="sentence-notes-title">📝 重点词注释</div>
+  <div class="sentence-notes">
+    <b>annex</b> <em>/ˈæneks/</em> — 附件——合同或报告的补充文件，常包含关键技术规格<br>
+    <b>freeboard</b> <em>/ˈfriːbɔːrd/</em> — 干舷——水面到结构顶部的垂向安全距离，防止越浪和淹水<br>
+    <b>monsoon</b> <em>/mɒnˈsuːn/</em> — 季风——支配印尼气候的季风系统，决定施工作业窗口<br>
+    <b>salinity</b> <em>/səˈlɪnəti/</em> — 盐度——海水含盐浓度，决定混凝土和钢结构防腐设计等级
+  </div>
+  <div class="sentence-date">收录：2026-07-14</div>
+</div>
+
+<div class="sentence-card" id="sent-36" data-en="To comply with the port authority's mandate, the contractor must conduct a shoreline survey and verify the hull buoyancy of the floating dock before commissioning." data-cn="为遵守港务局的授权要求，承包商必须在投运前完成海岸线测量并核实浮码头的船体浮力。" data-notes="comply mandate shoreline hull buoyancy 遵守 授权 海岸线 船体 浮力 现场沟通 海岸勘察 船体验收">
+  <div class="sentence-scene">🏗️ 现场沟通 · 海岸勘察与船体验收</div>
+  <div class="sentence-en">To comply with the port authority's mandate, the contractor must conduct a shoreline survey and verify the hull buoyancy of the floating dock before commissioning.</div>
+  <div class="sentence-cn">为遵守港务局的授权要求，承包商必须在投运前完成海岸线测量并核实浮码头的船体浮力。</div>
+  <div class="sentence-notes-title">📝 重点词注释</div>
+  <div class="sentence-notes">
+    <b>comply</b> <em>/kəmˈplaɪ/</em> — 遵守；符合——合同与法规执行的核心动词<br>
+    <b>mandate</b> <em>/ˈmændeɪt/</em> — 授权；指令——正式赋予的执行权力<br>
+    <b>shoreline</b> <em>/ˈʃɔːrlaɪn/</em> — 海岸线——水陆交界的动态边线<br>
+    <b>hull</b> <em>/hʌl/</em> — 船体——船舶主要水密外壳结构<br>
+    <b>buoyancy</b> <em>/ˈbɔɪənsi/</em> — 浮力——物体在流体中的向上支持力
+  </div>
+  <div class="sentence-date">收录：2026-07-15</div>
+</div>
+
+<div class="sentence-card" id="sent-37" data-en="From a practical standpoint, the contract provision requires that backfill behind the quay wall be compacted before the anchor bolts are set." data-cn="从实际角度来看，合同条款要求码头岸壁后方回填料在安装地脚螺栓前完成压实。" data-notes="standpoint provision backfill quay wall anchor 立场 条款 回填 码头岸壁 锚固 项目管理 技术讨论">
+  <div class="sentence-scene">💼 项目管理 · 技术讨论</div>
+  <div class="sentence-en">From a practical standpoint, the contract provision requires that backfill behind the quay wall be compacted before the anchor bolts are set.</div>
+  <div class="sentence-cn">从实际角度来看，合同条款要求码头岸壁后方回填料在安装地脚螺栓前完成压实。</div>
+  <div class="sentence-notes-title">📝 重点词注释</div>
+  <div class="sentence-notes">
+    <b>standpoint</b> <em>/ˈstændˌpɔɪnt/</em> — 立场；观点——分析问题时所站的角度，商务讨论常用"from a XX standpoint"引出视角<br>
+    <b>provision</b> <em>/prəˈvɪʒ(ə)n/</em> — 条款；规定——合同中针对特定事项设定的规则<br>
+    <b>backfill</b> <em>/ˈbækˌfɪl/</em> — 回填——结构完成后将土石料填回开挖区的工序
+  </div>
+  <div class="sentence-date">收录：2026-07-16</div>
+</div>
+
+<div class="sentence-card" id="sent-38" data-en="Our lobby tactics with the port authority ultimately secured approval for the new ramp across the estuary, though initial discussions faced significant resistance." data-cn="我们与港务局的游说策略最终获得了穿越河口的新建坡道的批准，尽管初期讨论遭遇了相当大的阻力。" data-notes="lobby tactic ramp estuary 游说 策略 坡道 河口 商务谈判 政府审批 争取支持">
+  <div class="sentence-scene">🤝 商务谈判 · 政府审批</div>
+  <div class="sentence-en">Our lobby tactics with the port authority ultimately secured approval for the new ramp across the estuary, though initial discussions faced significant resistance.</div>
+  <div class="sentence-cn">我们与港务局的游说策略最终获得了穿越河口的新建坡道的批准，尽管初期讨论遭遇了相当大的阻力。</div>
+  <div class="sentence-notes-title">📝 重点词注释</div>
+  <div class="sentence-notes">
+    <b>lobby</b> <em>/ˈlɒbi/</em> — 游说；争取——向决策者施加影响以推动某项决定或政策<br>
+    <b>tactic</b> <em>/ˈtæktɪk/</em> — 策略；手段——为实现特定目标而采取的具体行动方式<br>
+    <b>ramp</b> <em>/ræmp/</em> — 坡道；引桥——连接码头与陆域或船舶与岸侧的倾斜通道<br>
+    <b>estuary</b> <em>/ˈestʃuˌeri/</em> — 河口；河口湾——河流入海口处受潮汐影响的半封闭水域
+  </div>
+  <div class="sentence-date">收录：2026-07-17</div>
+</div>
+
+
+
 <p class="footer">商务英语每日一句，积少成多，沟通更专业。</p>
 
 </div><!-- /tab-sentences -->
@@ -4965,6 +5631,19 @@ function resetAllSentences() {
       setTimeout(function() { card.classList.remove('jump-highlight'); }, 2000);
     }
 
+    // 供搜索链接 onclick 调用的全局跳转函数
+    // 点击跳转后保留搜索结果列表与当前过滤视图，方便连续挑选不同匹配项
+    window.jumpToTarget = function(id) {
+      var target = document.getElementById(id);
+      if (!target) return;
+      var inWordsTab = document.getElementById('tab-words').contains(target);
+      if (inWordsTab && currentTab !== 'words') { switchTab('words'); }
+      else if (!inWordsTab && currentTab !== 'sentences') { switchTab('sentences'); }
+      // 不重置、不清空搜索结果条：保持过滤视图与匹配列表，便于继续点选其他项
+      if (noResult) noResult.classList.remove('visible');
+      scrollToCard(target);
+    };
+
     // ═══ 搜索：单词 Tab ═══
     function searchWords(query) {
       var matched = [];
@@ -5016,23 +5695,10 @@ function resetAllSentences() {
         matched.forEach(function(c) {
           var nameEl = c.querySelector('.word-name');
           var name = nameEl ? nameEl.textContent : '';
-          html += ' <a href="#" class="search-link" data-idx="' + c.id + '" style="margin:0 4px;color:#4a6fa5;text-decoration:underline;cursor:pointer;">' + name + '</a>';
+          html += ' <a href="#" class="search-link" data-idx="' + c.id + '" title="点击跳转到：' + name + '" onclick="jumpToTarget(\'' + c.id + '\')">' + name + '</a>';
         });
         results.innerHTML = html;
         results.classList.add('visible');
-
-        results.querySelectorAll('.search-link').forEach(function(a) {
-          a.addEventListener('click', function(e) {
-            e.preventDefault();
-            var id = a.getAttribute('data-idx');
-            var target = document.getElementById(id);
-            if (target) {
-              resetAllWords();
-              scrollToCard(target);
-              results.classList.remove('visible');
-            }
-          });
-        });
       }
       return true;
     }
@@ -5064,23 +5730,10 @@ function resetAllSentences() {
         matched.forEach(function(c) {
           var en = c.getAttribute('data-en') || '';
           var label = en.length > 40 ? en.substring(0, 40) + '…' : en;
-          html += ' <a href="#" class="search-link" data-idx="' + c.id + '" style="margin:0 4px;color:#4a6fa5;text-decoration:underline;cursor:pointer;">' + label + '</a>';
+          html += ' <a href="#" class="search-link" data-idx="' + c.id + '" title="点击跳转到该句子" onclick="jumpToTarget(\'' + c.id + '\')">' + label + '</a>';
         });
         results.innerHTML = html;
         results.classList.add('visible');
-
-        results.querySelectorAll('.search-link').forEach(function(a) {
-          a.addEventListener('click', function(e) {
-            e.preventDefault();
-            var id = a.getAttribute('data-idx');
-            var target = document.getElementById(id);
-            if (target) {
-              resetAllSentences();
-              scrollToCard(target);
-              results.classList.remove('visible');
-            }
-          });
-        });
       }
       return true;
     }
