@@ -451,12 +451,129 @@
     box-shadow: 0 6px 18px rgba(74,111,165,0.5);
     transform: translateY(-2px);
   }
+
+  /* ═══ 单词抽查 Quiz ═══ */
+  #quizRoot { margin-top: 8px; }
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #4a6fa5, #3d5d8a);
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  .quiz-date { font-weight: 600; font-size: 15px; }
+  .quiz-progress { font-size: 15px; font-weight: 700; }
+  .quiz-desc {
+    color: #66788a;
+    font-size: 13px;
+    margin: 0 0 18px 4px;
+  }
+  .quiz-question {
+    background: #fafbfc;
+    border: 1px solid #e6ebf1;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+  .quiz-q-head {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4a6fa5;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .quiz-q-text { font-size: 18px; font-weight: 600; margin-bottom: 12px; word-break: break-word; }
+  .quiz-word { color: #2c3e50; }
+  .quiz-phon { color: #8899aa; font-size: 15px; font-weight: 400; margin-left: 6px; }
+  .quiz-meaning { color: #2c3e50; }
+  /* 选项：竖向排列 + 加框 */
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #2c3e50;
+    background: #fff;
+    border: 1.5px solid #d4dce6;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .05s;
+    font-family: inherit;
+    word-break: break-word;
+  }
+  .quiz-option:hover:not(:disabled) {
+    border-color: #4a6fa5;
+    background: #f0f5fb;
+  }
+  .quiz-option:active:not(:disabled) { transform: scale(0.99); }
+  .quiz-option:disabled { cursor: default; }
+  /* 选中后：正确项绿、错误项红，并显示 ✅/❌ */
+  .quiz-option.correct {
+    background: #e9f9ee;
+    border-color: #2e9e54;
+    color: #1f7a3d;
+    font-weight: 700;
+  }
+  .quiz-option.correct::after {
+    content: " ✅";
+    font-weight: 400;
+  }
+  .quiz-option.wrong {
+    background: #fdecec;
+    border-color: #e23b3b;
+    color: #c0271f;
+    font-weight: 700;
+  }
+  .quiz-option.wrong::after {
+    content: " ❌";
+    font-weight: 400;
+  }
+  /* 已作答后，未选中的干扰项淡化 */
+  .quiz-options.answered .quiz-option:not(.correct):not(.wrong) {
+    opacity: 0.55;
+  }
+  .quiz-controls { margin-top: 4px; }
+  .quiz-btn {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: #4a6fa5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .quiz-btn:hover { background: #3d5d8a; }
+  .quiz-final {
+    margin-top: 18px;
+    padding: 16px 18px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c3e50;
+    background: #eef3fa;
+    border: 1px solid #d4dce6;
+    border-radius: 12px;
+  }
 </style>
 </head>
 <body>
 <div class="container">
 <h1>📖 英语单词本</h1>
-<p class="subtitle">每日积累 · 港口工程 + 职场用语 · 最后更新：2026-10-16</p>
+<p class="subtitle">每日积累 · 港口工程 + 职场用语 · 最后更新：2026-10-23</p>
 <!-- ═══════════ Tab 切换栏 ═══════════ -->
 <div class="tab-bar">
 <div class="tab-dropdown-wrapper" id="tabWordsWrapper">
@@ -468,6 +585,7 @@
 </div>
 <button class="tab-btn" id="tabBtnSentences" onclick="switchTab('sentences')">💬 每日一句</button>
 <button class="tab-btn today-tab-btn" id="tabBtnToday" onclick="switchTab('today')">🔴 今日更新</button>
+<button class="tab-btn" id="tabBtnQuiz" onclick="switchTab('quiz')">📝 单词抽查</button>
 </div>
 <!-- ═══════════ 搜索栏 ═══════════ -->
 <div class="search-bar">
@@ -699,7 +817,7 @@
 </div>
 <div class="word-date">收录：2026-08-14</div>
 </div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">beach nourishment</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/biːtʃ ˈnɜːʃmənt/</span></div><div class="word-body"><div class="word-meaning">海滩补砂/养滩；从邻近水域或取砂区采砂回填受侵蚀后退的海岸，以恢复岸线形态与防浪能力的软质海岸防护工法；相比抛石护面等硬结构更生态、可持续。</div><div class="word-example"><i>The beach nourishment programme widened the eroded shoreline by 40 metres and restored its coastal defence function.</i><span class="cn">海滩补砂工程将受侵蚀后退的岸线拓宽了 40 米，恢复了海岸防护功能。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 beach（海滩）+ nourishment（滋养/补给）→ 给海滩“喂沙子”。热带岛屿项目台风季前常做 beach nourishment 抵御侵蚀，与硬式护岸（revetment/armour）互补。</div></div><div class="word-date">收录：2026-10-19</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">beacon</span>
 <span class="word-pos">n.</span>
@@ -1032,7 +1150,7 @@
 </div>
 <div class="word-date">收录：2026-06-02</div>
 </div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">bund</span><span class="word-pos">n.</span><span class="word-phonetic">/bʌnd/</span></div><div class="word-body"><div class="word-meaning">围堤；筑堤——沿水域或填海区边缘修筑的堤坝，用于圈围场地、挡水与形成陆域（reclamation bund）。在印尼、马来等东南亚填海造地中极为常见，常兼作施工期临时围堰。</div><div class="word-example"><i>A perimeter bund was constructed to enclose the reclamation area before the dredged fill was pumped in.</i><span class="cn">在吹填填料泵入前，先修筑了周边围堤以圈围填海区。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 bund 源自印地语/马来语，东南亚工程英语高频。联想：reclamation bund（吹填围堤）先把海“圈”起来再填，是填海第一步。</div></div><div class="word-date">收录：2026-10-22</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">bunkering</span>
 <span class="word-pos">n.</span>
@@ -1318,7 +1436,7 @@
 </div>
 <div class="word-date">收录：2026-07-11</div>
 </div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">change control</span><span class="word-pos">n.</span><span class="word-phonetic">/tʃeɪndʒ kənˈtrəʊl/</span></div><div class="word-body"><div class="word-meaning">变更控制——对项目范围、设计或合同的任何修改，须按既定流程（提出→评估→审批→实施）受控管理，防止范围蔓延（scope creep）与成本失控。海外工程多国并行时尤为重要。</div><div class="word-example"><i>All design modifications must go through the change control process and obtain the client's written approval.</i><span class="cn">所有设计修改都必须走变更控制流程，并取得业主的书面批准。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 change（变更）+ control（控制）。联想：change control 是 governance 的落地抓手——没走流程的修改=失控；对应国内“设计变更管理”。</div></div><div class="word-date">收录：2026-10-22</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">chart datum</span>
 <span class="word-pos">n.</span>
@@ -2860,7 +2978,7 @@
 <div class="word-date">收录：2026-09-15</div>
 </div>
 <div class="letter-group">I</div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">inclinometer</span><span class="word-pos">n.</span><span class="word-phonetic">/ɪnˌklaɪnˈɒmɪtə/</span></div><div class="word-body"><div class="word-meaning">测斜仪；埋设于边坡、挡墙或深基坑侧壁的监测仪器，连续量测土体或结构的深层水平位移，是基坑与高边坡安全预警的核心传感器，常与水位计、沉降仪配套成监测网。</div><div class="word-example"><i>The inclinometer readings indicated 25 mm of lateral movement in the retained soil, triggering a safety halt.</i><span class="cn">测斜仪读数显示支护土体发生了 25 毫米的侧向位移，随即触发了安全停工。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 in-（倾斜 incline）+ -meter（计）→ 量倾斜的仪器。港口高边坡、板桩墙背后土体滑移前，inclinometer 往往最先报警，是现场安全的“哨兵”。</div></div><div class="word-date">收录：2026-10-19</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">intertidal</span> <span class="word-pos">adj.</span>
 <span class="word-phonetic">/ˌɪntəˈtaɪdl/</span>
@@ -2892,9 +3010,9 @@
 </div>
 <div class="word-date">收录：2026-07-30 · 🏗️ 港口工程</div>
 </div>
-<div class="word-card today">
+<div class="word-card">
 <div class="word-head">
-<span class="word-name">jet grouting</span><span class="today-badge">今日</span>
+<span class="word-name">jet grouting</span>
 <span class="word-pos">n. (phrase)</span>
 <span class="word-phonetic">/dʒet ˈɡraʊtɪŋ/</span>
 </div>
@@ -2972,7 +3090,7 @@
 <div class="word-date">收录：2026-07-27 · 🏗️ 港口工程</div>
 </div>
 <div class="letter-group">L</div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">leading lights</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/ˈliːdɪŋ laɪts/</span></div><div class="word-body"><div class="word-meaning">导标（前后导标）；港口进港航道或运河上成对（前、后）设置的助航灯光标志。船舶将两灯上下重叠成一线时即沿设计航线航行，是大雾或夜间安全进港的关键助航设施。</div><div class="word-example"><i>The vessel aligned the leading lights and proceeded safely through the narrow dredged channel.</i><span class="cn">船舶对准导标一线，安全驶过狭窄的疏浚航道。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 leading（引导的）+ lights（灯）→ 引导方向的灯。与单一 lighthouse（灯塔）不同：leading lights 是“一对”，靠“叠标”给出精确航线，港口航道标配。</div></div><div class="word-date">收录：2026-10-19</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">lashing</span>
 <span class="word-pos">n.</span>
@@ -3036,7 +3154,7 @@
 </div>
 <div class="word-date">收录：2026-09-11</div>
 </div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">liquefaction</span><span class="word-pos">n.</span><span class="word-phonetic">/ˌlɪkwɪˈfækʃən/</span></div><div class="word-body"><div class="word-meaning">液化；饱和疏松砂土或粉土在地震、循环荷载或突然卸载作用下，孔隙水压力急剧上升、有效应力趋近于零，从而暂时丧失抗剪强度、表现出类似液体行为的现象。是港口陆域、码头岸坡与填海区抗震设计的核心风险，常通过标准贯入试验（SPT N 值）、相对密度 Dr 或 CPT 判定，并用碎石桩、振冲、强夯或置换等地基处理方法消除。</div><div class="word-example"><i>The saturated hydraulic fill behind the quay wall was identified as liquefiable, so stone columns were specified to mitigate the seismic hazard.</i><span class="cn">码头墙后饱和水力充填土被判定为可液化土，因此规定采用碎石桩来减轻地震危害。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 liquefy（液化）+ -action（过程/状态）→ 土「变成液体」的过程。港口抗震三板斧：判液化（SPT/CPT）→ 选工法（碎石桩/振冲/强夯）→ 验指标（Dr 或 N）。比通项目位于环太平洋地震带，液化评价是码头抗震专篇的必答题。</div></div><div class="word-date">收录：2026-10-20</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">list</span>
 <span class="word-pos">n. / v.</span>
@@ -3178,7 +3296,7 @@
 </div>
 <div class="word-date">收录：2026-07-27 · 🏗️ 港口工程</div>
 </div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">marina</span><span class="word-pos">n.</span><span class="word-phonetic">/məˈriːnə/</span></div><div class="word-body"><div class="word-meaning">游艇码头；小型船舶停泊区——专为游艇、快艇等休闲/小型船舶设计的系泊水域与岸基服务区，通常含浮码头、防波堤、加油与维修设施，区别于以货运为主的 commercial port。</div><div class="word-example"><i>The new marina provides 120 berths for yachts, with a floating pontoon linked to the shore by a gangway.</i><span class="cn">新建游艇码头设 120 个游艇泊位，并有一座由栈桥连接岸线的浮码头。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 marina 源自意大利语“marina”（海滨）。联想：比通项目的游艇浮码头（floating pontoon）就是典型 marina，重在泊位与服务而非货运。</div></div><div class="word-date">收录：2026-10-22</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">marine</span>
 <span class="word-pos">adj. / n.</span>
@@ -3451,6 +3569,7 @@
 <div class="word-date">收录：2026-09-08</div>
 </div>
 <div class="word-card">
+
 <div class="word-head">
 <span class="word-name">overtopping</span>
 <span class="word-pos">n.</span>
@@ -3465,9 +3584,9 @@
 <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 over（越过）+ top（顶）+ ing →「越过顶部」。和 crest（堤顶）是天生一对：堤顶不够高，浪就 overtopping。</div>
 </div>
 <div class="word-date">收录：2026-07-12</div>
-</div>
+</div><div class="word-card"><div class="word-head"><span class="word-name">overturning</span><span class="word-pos">n.</span><span class="word-phonetic">/ˌəʊvəˈtɜːnɪŋ/</span></div><div class="word-body"><div class="word-meaning">倾覆——结构或构件在水平荷载（波浪、风、土压力、船舶撞击）作用下绕基底边缘转动失稀的破坏模式。是重力式码头、防波堤与挡墙稳定性验算的三大工况之一（抗滑、抗倾、地基承载力）。</div><div class="word-example"><i>The gravity caisson was checked for overturning under the combined wave and berthing loads.</i><span class="cn">对重力式沉箱在波浪与靠泊荷载组合作用下进行了抗倾覆验算。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 over-（翻转）+ turn（转）→ 翻倒。港口稳定性三连：sliding（抗滑）、overturning（抗倾）、bearing（承载力），算完才敢说结构稳。</div></div><div class="word-date">收录：2026-10-21</div></div>
 <div class="letter-group">P</div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">parapet</span><span class="word-pos">n.</span><span class="word-phonetic">/ˈpærəpɪt/</span></div><div class="word-body"><div class="word-meaning">防浪墙；女儿墙——设置在码头、挡墙或桥梁边缘顶部的短墙，用以防止车辆、设备或人员堖落，并在港口工程中兼作防浪、防冲刷的胸墙（parapet wall）。</div><div class="word-example"><i>A reinforced concrete parapet was added to the quay edge to protect equipment from overturning during storm surge.</i><span class="cn">码头边缘增设了钢筌混凝土防浪墙，以防风暴澝期间设备倾覆堖落。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 para-（护）+ pet（胸墙）→ 护在「胸」前的短墙。港口胸墙（parapet wall）既挡浪又挡车，设计时常与变形缝对齐。</div></div><div class="word-date">收录：2026-10-21</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">permeability</span>
 <span class="word-pos">n.</span>
@@ -3609,7 +3728,8 @@
 </div>
 <div class="word-date">收录：2026-06-25</div>
 </div>
-<div class="word-card">
+
+<div class="word-card"><div class="word-head"><span class="word-name">pilotage</span><span class="word-pos">n.</span><span class="word-phonetic">/ˈpaɪlətɪdʒ/</span></div><div class="word-body"><div class="word-meaning">引航（引水）；由持有资质的引航员（maritime pilot）登轮引领船舶进出港口、通过复杂航道或靠离泊位的有偿服务，是港口通航安全的关键环节。分为进港引航、出港引航与移泊引航；多数国家强制外籍船舶在港界内由引航员引领（compulsory pilotage）。引航费（pilotage dues）通常按船舶吨位或吃水计收。</div><div class="word-example"><i>Compulsory pilotage is required for all vessels over 50,000 GT entering the harbor, and the pilot boards at the designated boarding ground.</i><span class="cn">所有进入本港、总吨超过 5 万吨的船舶均须强制引航，引航员在指定登轮点登轮。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 pilot（引航员/驾驶）+ -age（服务/费用）→ 引航这项「服务」及其「费用」。记法：pilot 是「舵手」，pilotage 是把舵手请上船引领的整套制度与收费。印尼主要港口对外轮普遍实行强制引航，进港前业主函件必提 pilotage arrangement。</div></div><div class="word-date">收录：2026-10-20</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">pitching</span>
 <span class="word-pos">n.</span>
@@ -3802,7 +3922,7 @@
 </div>
 <div class="word-date">收录：2026-06-15</div>
 </div>
-<div class="word-card">
+<div class="word-card today"><div class="word-head"><span class="word-name">residual settlement</span><span class="today-badge">今日</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/ˈrezɪdjuəl ˈsetlmənt/</span></div><div class="word-body"><div class="word-meaning">工后沉降；填土、堆载或结构建成之后，地基在自重与使用荷载下持续发生的剩余沉降。吹填软基、疏浚弃土区与堆场地基处理中必须预估并控制，以免道路开裂、管线错位或轨道不平。</div><div class="word-example"><i>Long-term monitoring showed the residual settlement of the reclaimed yard exceeded the 200 mm design tolerance.</i><span class="cn">长期监测显示吹填堆场的工后沉降超出了 200 毫米的设计容许值。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 residual（残余的）+ settlement（沉降）→ 完工后还“接着沉”。印尼填海软黏土地基工后沉降大，是堆场与道路开裂主因，常配排水板+堆载预压来控制。</div><div class="word-date">收录：2026-10-23</div></div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">retaining wall</span>
 <span class="word-pos">n.</span>
@@ -4132,7 +4252,7 @@
 </div>
 <div class="word-date">收录：2026-09-09</div>
 </div>
-<div class="word-card">
+<div class="word-card today"><div class="word-head"><span class="word-name">sediment transport</span><span class="today-badge">今日</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/ˈsedɪmənt ˈtrænspɔːt/</span></div><div class="word-body"><div class="word-meaning">泥沙输移；泥沙在水流、波浪与潮流共同作用下被搬运、悬扬与落淤的过程，是港口航道回淤、河口演变与岸滩冲淤分析的核心对象；疏浚设计与防淤措施均以其为计算基础。</div><div class="word-example"><i>The sediment transport model indicated severe silting at the harbour entrance, requiring annual maintenance dredging.</i><span class="cn">泥沙输移模型显示港口口门处淤积严重，需每年进行维护性疏浚。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 sediment（泥沙/沉积物）+ transport（输移）→ 沙子被“搬运”。印尼群岛河口与航道常年受泥沙输移影响，是疏浚量预测的第一输入，也是选港址必算项。</div><div class="word-date">收录：2026-10-23</div></div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">seepage</span>
 <span class="word-pos">n.</span>
@@ -4276,7 +4396,7 @@
 </div>
 <div class="word-date">收录：2026-07-15</div>
 </div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">shoring</span><span class="word-pos">n.</span><span class="word-phonetic">/ˈʃɔːrɪŋ/</span></div><div class="word-body"><div class="word-meaning">支护；临时支撑——在开挖、基坑或结构施工期间，为抗土压力或荷载、防止侧壁堙塌而设置的临时支撑体系（如钢支撑、木板桩、斜撑）。常见于码头岸坡开挖、深基坑与隧道洞口。</div><div class="word-example"><i>The contractor installed steel shoring to stabilize the excavation faces before placing the quay wall foundation.</i><span class="cn">承包商在浇筑码头墙基础前，安装了钢支护以稳定开挖面。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 shore（支撑/岸边）+ -ing → 临时「撑住」的体系。联想：开挖越深，shoring 越要分级设撑；港口深基坑与岸坡防护的保命工序。</div></div><div class="word-date">收录：2026-10-21</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">significant wave height</span>
 <span class="word-pos">n. (phrase)</span>
@@ -4417,9 +4537,9 @@
 </div>
 <div class="word-date">收录：2026-08-21</div>
 </div>
-<div class="word-card today">
+<div class="word-card">
 <div class="word-head">
-<span class="word-name">slope protection</span><span class="today-badge">今日</span>
+<span class="word-name">slope protection</span>
 <span class="word-pos">n. (phrase)</span>
 <span class="word-phonetic">/sləʊp prəˈtekʃ(ə)n/</span>
 </div>
@@ -4734,9 +4854,9 @@
 </div>
 <div class="word-date">收录：2026-09-14</div>
 </div>
-<div class="word-card today">
+<div class="word-card">
 <div class="word-head">
-<span class="word-name">stone column</span><span class="today-badge">今日</span>
+<span class="word-name">stone column</span>
 <span class="word-pos">n. (phrase)</span>
 <span class="word-phonetic">/stəʊn ˈkɒləm/</span>
 </div>
@@ -4893,6 +5013,7 @@
 <div class="word-date">收录：2026-08-27</div>
 </div>
 <div class="word-card">
+
 <div class="word-head">
 <span class="word-name">swing basin</span>
 <span class="word-pos">n.</span>
@@ -4956,7 +5077,7 @@
 <div class="word-date">收录：2026-08-12</div>
 </div>
 </div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">tide</span><span class="word-pos">n.</span><span class="word-phonetic">/taɪd/</span></div><div class="word-body"><div class="word-meaning">潮汐——由月球与太阳引力引起的周期性海平面升降。港口设计的核心边界条件之一：决定航道/泊位水深、乘潮水位（tidal window）、系泊荷载与施工进度安排。</div><div class="word-example"><i>Dredging operations were scheduled during the high tide window to maximize the available water depth.</i><span class="cn">疏浚作业安排在涨潮窗口期内进行，以最大化可利用水深。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 tide 与 tidal（潮汐的）同源。联想：tidal range（潮差）决定富裕水深 underkeel clearance，是船舶乘潮进港的关键。</div></div><div class="word-date">收录：2026-10-22</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">tide gauge</span>
 <span class="word-pos">n.</span>
@@ -5400,7 +5521,7 @@
 </div>
 <div class="word-date">收录：2026-07-06</div>
 </div>
-<div class="word-card">
+<div class="word-card today"><div class="word-head"><span class="word-name">wave diffraction</span><span class="today-badge">今日</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/weɪv ˌdɪfrækˈʃən/</span></div><div class="word-body"><div class="word-meaning">波浪绕射；波浪绕过防波堤堤头、突堤或建筑物拐角，向掩护水域传播并衰减的现象，决定港池泊稳条件与码头后方波高分布，是口门与防波堤平面布置的关键考量。</div><div class="word-example"><i>Wave diffraction around the breakwater head reduced wave height inside the basin to within the berthing criterion.</i><span class="cn">波浪在防波堤堤头处的绕射，使港池内波高降至靠泊标准以内。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 diffract = 绕射/使弯折（如光绕过障碍），wave diffraction 即波“拐弯”进港池。设计防波堤缺口时必须算绕射系数，否则泊位波高易超标。</div><div class="word-date">收录：2026-10-23</div></div></div><div class="word-card"><div class="word-head"><span class="word-name">wave run-up</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/weɪv ˈrʌn ʌp/</span></div><div class="word-body"><div class="word-meaning">波浪爬高；波浪破碎后沿斜面（海堤、护岸、沙滩）上爬的最大高程与静水面的差值，是防波堤胸墙顶高程、护岸越浪量和陆域防护设计的关键参数。常用 Goda 公式或经验爬高系数（run-up coefficient）估算，受波高、周期、坡度与护面糙率影响显著；与 wave overtopping（越浪）共同决定堤顶超高（freeboard）。</div><div class="word-example"><i>The design wave run-up on the rubble-mound breakwater exceeded the crest level, so the parapet wall was raised to prevent overtopping.</i><span class="cn">抛石防波堤上的设计波浪爬高超过了堤顶高程，因此抬高了胸墙以防止越浪。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 wave（波浪）+ run-up（向上冲跑）→ 浪「冲到的最高点」。联想：run-up 是浪的「冲刺高度」，over-top-ping 是浪「翻过堤顶」，两者配合定堤顶超高。防波堤断面设计先算 run-up，再校 overtopping。</div></div><div class="word-date">收录：2026-10-20</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">weir</span>
 <span class="word-pos">n.</span>
@@ -5510,7 +5631,7 @@
 <div class="word-date">收录：2026-06-19</div>
 </div>
 <div class="letter-group">V</div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">value engineering</span><span class="word-pos">n.</span><span class="word-phonetic">/ˈvæljuː ˌendʒɪˈnɪərɪŋ/</span></div><div class="word-body"><div class="word-meaning">价值工程——在不降低功能与质量的前提下，通过系统性分析优化设计方案、降低全寿命周期成本的管理技术（VE）。常用于港口结构选型与材料比选。</div><div class="word-example"><i>The contractor proposed value engineering to replace the reinforced concrete capping beam with a precast alternative.</i><span class="cn">承包商提出价值工程方案，用预制构件替代钢筋混凝土冠梁。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 value（价值）+ engineering（工程）。联想：VE 不是“偷工减料”，而是“花更少、办一样好”；常产出变更单（variation order）。</div></div><div class="word-date">收录：2026-10-22</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">vessel</span>
 <span class="word-pos">n.</span>
@@ -5544,7 +5665,7 @@
 </div>
 <div class="word-date">收录：2026-10-10</div>
 </div><div class="letter-group">A</div>
-<div class="word-card">
+<div class="word-card today"><div class="word-head"><span class="word-name">acceptance criteria</span><span class="today-badge">今日</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/əkˈseptəns kraɪˈtɪəriə/</span></div><div class="word-body"><div class="word-meaning">验收标准；客户或合同方据以判断交付物是否“完成且合格”的具体、可度量条件（质量、尺寸、功能、文档等）。在变更单、分包合同与节点验收中须事先书面约定，避免交付时扯皮。</div><div class="word-example"><i>The variation order was approved only after the contractor met all acceptance criteria listed in the specification.</i><span class="cn">分包商满足规范中列明的全部验收标准后，该变更单才获批准。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 accept（接受/验收）+ criteria（标准，criterion 的复数）→ 验收的“尺子”。对外商务与合同沟通中先定 acceptance criteria，交付时才不会各说各话。</div><div class="word-date">收录：2026-10-23</div></div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">accountability</span> <span class="word-pos">n.</span>
 <span class="word-phonetic">/əˌkaʊntəˈbɪlɪti/</span>
@@ -5860,9 +5981,9 @@
 </div>
 <div class="word-date">收录：2026-07-10</div>
 </div>
-<div class="word-card today">
+<div class="word-card">
 <div class="word-head">
-<span class="word-name">award</span><span class="today-badge">今日</span>
+<span class="word-name">award</span>
 <span class="word-pos">v. / n.</span>
 <span class="word-phonetic">/əˈwɔːd/</span>
 </div>
@@ -6081,7 +6202,7 @@
 <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 brief（简短的）+ -ing → 把事情"简要说明"的过程；工程现场每天开工前必有 briefing，职场人最熟悉的会议形式之一。</div>
 </div>
 <div class="word-date">收录：2026-06-06</div>
-</div>
+</div><div class="word-card today"><div class="word-head"><span class="word-name">burndown</span><span class="today-badge">今日</span><span class="word-pos">n.</span><span class="word-phonetic">/ˈbɜːndaʊn/</span></div><div class="word-body"><div class="word-meaning">燃尽图；敏捷项目管理中显示剩余工作量随时间递减的图表，横轴为时间、纵轴为待办故事点，用于直观判断迭代（sprint）能否在既定节点“燃尽”全部任务。</div><div class="word-example"><i>The sprint burndown showed we were two days behind, so we trimmed the backlog to hit the deadline.</i><span class="cn">本次迭代燃尽图显示我们落后了两天，于是我们精简了待办清单以赶上截止日期。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 burn（烧）+ down（尽）→ 把任务“烧光”。每日站会盯着燃尽图，曲线若走平说明卡点未解，是项目经理掌握进度的直观体温计。</div><div class="word-date">收录：2026-10-23</div></div></div>
 <div class="letter-group">C</div>
 <div class="word-card">
 <div class="word-head">
@@ -6655,9 +6776,9 @@
 <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 字面“深潜”，形象化为“潜入问题底层”；职场中 deep dive 比 “study” 更强调系统、彻底的剖析，常见于复盘与决策前的调研。</div>
 </div>
 <div class="word-date">收录：2026-10-06</div>
-</div><div class="word-card today">
+</div><div class="word-card">
 <div class="word-head">
-<span class="word-name">defect liability</span><span class="today-badge">今日</span>
+<span class="word-name">defect liability</span>
 <span class="word-pos">n. (phrase)</span>
 <span class="word-phonetic">/dɪˈfekt ˌlaɪəˈbɪləti/</span>
 </div>
@@ -6893,7 +7014,7 @@
 <div class="word-date">收录：2026-07-30 · 💼 职场用语</div>
 </div>
 <div class="letter-group">E</div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">earned value</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/ɜːnd ˈvæljuː/</span></div><div class="word-body"><div class="word-meaning">挣值（挣值管理 EVM 的核心指标）；已完成工作的预算成本（EV = 计划单价 × 实际完成量），将进度与费用综合在同一口径下度量项目绩效，用以判断成本/进度偏差（CV/SV）。</div><div class="word-example"><i>Earned value analysis showed the marine works were 8% over budget but two weeks ahead of schedule.</i><span class="cn">挣值分析显示，水工工程费用超支 8%，但进度比计划提前两周。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 earned（挣得的）+ value（价值）→ 活儿“干出来”的那部分预算。国际工程合同常用 EVM 管控：EV、PV、AC 三量齐看，一眼看出超支还是超前。</div></div><div class="word-date">收录：2026-10-19</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">empower</span>
 <span class="word-pos">v.</span>
@@ -7165,7 +7286,7 @@
 <div class="word-date">收录：2026-07-06</div>
 </div>
 <div class="letter-group">G</div>
-<div class="word-card">
+<div class="word-card"><div class="word-head"><span class="word-name">governance</span><span class="word-pos">n.</span><span class="word-phonetic">/ˈɡʌvənəns/</span></div><div class="word-body"><div class="word-meaning">治理；项目管控——通过明确的决策机制、权责划分与审批流程，保障项目按规则推进的体系（project governance）。涵盖指导委员会、变更控制与风险治理。</div><div class="word-example"><i>The project governance board approved the variation order after reviewing the cost impact.</i><span class="cn">项目治理委员会在评估费用影响后批准了变更单。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 govern（治理/统治）+ -ance → 一套「怎么管」的规则。联想：governance 解决「谁拍板、怎么批、谁负责」，是海外多国项目并行时的秩序底座。</div></div><div class="word-date">收录：2026-10-21</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">grievance</span>
 <span class="word-pos">n.</span>
@@ -7182,6 +7303,7 @@
 <div class="word-date">收录：2026-06-18</div>
 </div>
 <div class="word-card">
+
 <div class="word-head">
 <span class="word-name">guarantee</span>
 <span class="word-pos">n. / v.</span>
@@ -7374,6 +7496,7 @@
 <div class="word-date">收录：2026-06-29</div>
 </div>
 <div class="word-card">
+
 <div class="word-head">
 <span class="word-name">kickoff</span>
 <span class="word-pos">n. / v.</span>
@@ -7388,7 +7511,7 @@
 <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 kick（踢）+ off（开始）→ 像足球开球一样“启动”。kickoff meeting 是项目生命周期第一个正式会议，定调子、分任务。和 mobilization（进场）、baseline（基线）常在同一阶段出现。</div>
 </div>
 <div class="word-date">收录：2026-09-21</div>
-</div>
+</div><div class="word-card"><div class="word-head"><span class="word-name">KPI</span><span class="word-pos">n.</span><span class="word-phonetic">/ˌkeɪ piː ˈaɪ/</span></div><div class="word-body"><div class="word-meaning">关键绩效指标（Key Performance Indicator）——用于量化衡量目标达成程度的核心指标，如进度完成率、安全工时、成本偏差率。项目周报与述职中高频出现。</div><div class="word-example"><i>We track KPIs such as earned value and safe man-hours to report project health to the sponsor.</i><span class="cn">我们跟踪挡值与安全工时等关键绩效指标，向项目发起人汇报项目健康状况。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 KPI = Key Performance Indicator 缩写。联想：好的 KPI 要「可量化、可考核」，别写成一堆漂亮但没人看的口号。</div></div><div class="word-date">收录：2026-10-21</div></div>
 <div class="letter-group">L</div>
 <div class="word-card">
 <div class="word-head">
@@ -7913,7 +8036,7 @@
 <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 拉丁语 per（每）+ diem（日）→ 「每日」。报销时和 reimbursement（据票报销）区分：per diem 按天包干、手续简单，适合长期海外驻场；大额实报实销走 reimbursement。比通项目中方人员驻场常用。</div>
 </div>
 <div class="word-date">收录：2026-10-02</div>
-</div><div class="word-card">
+</div><div class="word-card"><div class="word-head"><span class="word-name">performance bond</span><span class="word-pos">n. (phrase)</span><span class="word-phonetic">/pəˈfɔːməns bɒnd/</span></div><div class="word-body"><div class="word-meaning">履约保函；承包商向业主提交、由银行或担保机构开立的担保，保证其按合同履约，若违约业主可据此索赔。是授标与开工的前提，金额通常为合同价 5%–10%，竣工后释放或转质量保证函。</div><div class="word-example"><i>The performance bond must be submitted before the notice to proceed is issued for the quay wall works.</i><span class="cn">履约保函必须在码头墙工程开工通知发出前提交。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 performance（履约）+ bond（保函/债券）→ 保证“把活干完”的保函。与 bid bond（投标保函）、advance payment bond（预付款保函）是一家人，海外项目合同常三件套齐全。</div></div><div class="word-date">收录：2026-10-19</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">permit to work</span>
 <span class="word-pos">n. (phrase)</span>
@@ -8672,7 +8795,7 @@
 <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 register = 登记册。把每个风险“挂号建档”，写清谁负责、怎么应对——这就是 risk register。汇报时一句“已入册跟踪”显得很专业。</div>
 </div>
 <div class="word-date">收录：2026-10-13</div>
-</div><div class="letter-group">V</div>
+</div><div class="word-card"><div class="word-head"><span class="word-name">rollout</span><span class="word-pos">n.</span><span class="word-phonetic">/ˈroʊlaʊt/</span></div><div class="word-body"><div class="word-meaning">推广；上线部署——将新产品、新系统或新流程分阶段或一次性交付到实际使用环境的过程（phased rollout：分阶段推广；global rollout：全球推广；rollout plan：推广计划）。强调从准备到全面落地的执行节奏与风险管理，与 pilot（试点）相对：先 pilot 验证，再 rollout 铺开。</div><div class="word-example"><i>After a successful two-month pilot, the new project management system will enter full rollout across all regional offices next quarter.</i><span class="cn">在为期两个月的试点取得成功之后，新项目管理系统将于下季度在所有区域办公室全面推广。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 roll（铺开）+ out（出去）→ 把东西「滚」出去铺到各处。联想：试点像小范围试吃，rollout 是正式「全网铺开」。海外事业部多国项目并行时，系统的 phased rollout 能控制风险。</div></div><div class="word-date">收录：2026-10-20</div></div><div class="letter-group">V</div>
 <div class="word-card">
 <div class="word-head">
 <span class="word-name">validate</span>
@@ -8896,7 +9019,7 @@
 <div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 字面“触垒”。联想棒球跑者碰到垒包才算数——touch base = 双方“接上头、对上号”。比 have a meeting 轻松，是外企及对外沟通高频短语。</div>
 </div>
 <div class="word-date">收录：2026-10-05</div>
-</div><div class="word-card">
+</div><div class="word-card"><div class="word-head"><span class="word-name">trade-off</span><span class="word-pos">n.</span><span class="word-phonetic">/ˈtreɪd ɒf/</span></div><div class="word-body"><div class="word-meaning">权衡；取舍——在相互制约的目标之间（如成本 vs 工期、质量 vs 速度、风险 vs 收益）做出的妥协与平衡决策。工程管理与商务谈判中高频词，常接 between A and B；做 trade-off 时要明确哪个维度优先（prioritize），并用数据支撑取舍。</div><div class="word-example"><i>There is an inevitable trade-off between construction speed and quality assurance, so we agreed to extend the schedule by two weeks.</i><span class="cn">施工速度与质量保证之间存在必然的权衡，因此我们同意将进度计划延长两周。</span></div><div class="word-meaning" style="margin-top:6px;font-size:13px;color:#888;">💡 trade（交易/交换）+ off（抵消）→ 用一项「换」另一项、互相抵消的取舍。联想：项目没有十全十美，trade-off 就是「拿这个换那个」。向业主汇报方案时，把 trade-off 讲清楚最能体现专业性。</div></div><div class="word-date">收录：2026-10-20</div></div><div class="word-card">
 <div class="word-head">
 <span class="word-name">turnaround</span>
 <span class="word-pos">n.</span>
@@ -9075,9 +9198,9 @@
 <div class="stats">
 <table>
 <tr><th>类别</th><th>单词数</th><th>最新更新</th></tr>
-<tr><td>港口工程类</td><td>317</td><td>2026-10-16</td></tr>
-<tr><td>职场用语类</td><td>223</td><td>2026-10-16</td></tr>
-<tr><td><b>合计</b></td><td>540</td><td>2026-10-16</td></tr>
+<tr><td>港口工程类</td><td>334</td><td>2026-10-23</td></tr>
+<tr><td>职场用语类</td><td>231</td><td>2026-10-23</td></tr>
+<tr><td><b>合计</b></td><td>565</td><td>2026-10-23</td></tr>
 </table>
 </div>
 <p class="footer">本单词本由每日英语单词自动化任务生成，持续更新中……</p>
@@ -10200,19 +10323,35 @@
 <b>variation order</b> <em>/ˌveəriˈeɪʃ(ə)n ˈɔːdə(r)/</em> — 变更单；对合同范围的正式变更指令。
   </div>
 <div class="sentence-date">收录：2026-10-15</div>
-</div><div class="sentence-card" id="sent-91" data-en="Before we award the ground improvement contract, the contractor must confirm the stone column and jet grouting specifications and clarify the 24-month defect liability period." data-cn="在授予地基处理合同之前，承包商必须确认碎石桩与旋喷桩的技术规格，并澄清 24 个月的缺陷责任期。" data-notes="award ground improvement defect liability 授标 地基处理 缺陷责任 项目管理 合同授标">
-  <div class="sentence-scene">💼 项目管理 · 合同授标</div>
-  <div class="sentence-en">Before we award the ground improvement contract, the contractor must confirm the stone column and jet grouting specifications and clarify the 24-month defect liability period.</div>
-  <div class="sentence-cn">在授予地基处理合同之前，承包商必须确认碎石桩与旋喷桩的技术规格，并澄清 24 个月的缺陷责任期。</div>
-  <div class="sentence-notes-title">📝 重点词注释</div>
-  <div class="sentence-notes">
-    <b>award</b> <em>/əˈwɔːd/</em> — 授标；将合同正式授予中标人。<br/>
-    <b>ground improvement</b> <em>/ɡraʊnd ɪmˈpruːvmənt/</em> — 地基处理；改良软弱地基的系列工法（如碎石桩、旋喷桩）。<br/>
-    <b>defect liability</b> <em>/dɪˈfekt ˌlaɪəˈbɪləti/</em> — 缺陷责任（缺陷责任期）；竣工后承包人修复质量缺陷的合同责任期。
+</div><div class="sentence-card" data-cn="在授予地基处理合同之前，承包商必须确认碎石桩与旋喷桩的技术规格，并澄清 24 个月的缺陷责任期。" data-en="Before we award the ground improvement contract, the contractor must confirm the stone column and jet grouting specifications and clarify the 24-month defect liability period." data-notes="award ground improvement defect liability 授标 地基处理 缺陷责任 项目管理 合同授标" id="sent-91">
+<div class="sentence-scene">💼 项目管理 · 合同授标</div>
+<div class="sentence-en">Before we award the ground improvement contract, the contractor must confirm the stone column and jet grouting specifications and clarify the 24-month defect liability period.</div>
+<div class="sentence-cn">在授予地基处理合同之前，承包商必须确认碎石桩与旋喷桩的技术规格，并澄清 24 个月的缺陷责任期。</div>
+<div class="sentence-notes-title">📝 重点词注释</div>
+<div class="sentence-notes">
+<b>award</b> <em>/əˈwɔːd/</em> — 授标；将合同正式授予中标人。<br/>
+<b>ground improvement</b> <em>/ɡraʊnd ɪmˈpruːvmənt/</em> — 地基处理；改良软弱地基的系列工法（如碎石桩、旋喷桩）。<br/>
+<b>defect liability</b> <em>/dɪˈfekt ˌlaɪəˈbɪləti/</em> — 缺陷责任（缺陷责任期）；竣工后承包人修复质量缺陷的合同责任期。
   </div>
-  <div class="sentence-date">收录：2026-10-16</div>
-</div><p class="footer">商务英语每日一句，积少成多，沟通更专业。</p>
-</div><!-- /tab-sentences -->
+<div class="sentence-date">收录：2026-10-16</div>
+</div><div class="sentence-card" data-cn="在释放履约保函之前，承包商须提交挣值报告，并确认吹填围堤沿线的导标与测斜仪读数均保持稳定。" data-en="Before the performance bond is released, the contractor must submit earned value reports and confirm that the leading lights and inclinometer readings along the reclamation bund are stable." data-notes="performance bond earned value leading lights 履约保函 挣值 导标 项目管理 合同与监测" id="sent-92"><div class="sentence-scene">💼 项目管理 · 合同与监测</div><div class="sentence-en">Before the performance bond is released, the contractor must submit earned value reports and confirm that the leading lights and inclinometer readings along the reclamation bund are stable.</div><div class="sentence-cn">在释放履约保函之前，承包商须提交挣值报告，并确认吹填围堤沿线的导标与测斜仪读数均保持稳定。</div><div class="sentence-notes-title">📝 重点词注释</div><div class="sentence-notes"><b>performance bond</b> <em>/pəˈfɔːməns bɒnd/</em> — 履约保函；保证承包商按约履约的银行担保，违约时业主可索赔。<br/><b>earned value</b> <em>/ɜːnd ˈvæljuː/</em> — 挣值；综合进度与费用的绩效度量（EV）。<br/><b>leading lights</b> <em>/ˈliːdɪŋ laɪts/</em> — 导标；进港航道上成对设置的助航灯光，叠标即航线。</div><div class="sentence-date">收录：2026-10-19</div></div><div class="sentence-card" id="sent-93" data-en="Before the full rollout of the reclamation works, we must carefully weigh the trade-off between dredging speed and sediment control, and confirm the pilotage arrangement with the harbour authority." data-cn="在吹填工程全面推广之前，我们必须仔细权衡疏浚速度与淤积控制之间的取舍，并与港务局确认引航安排。" data-notes="rollout trade-off pilotage 推广 权衡 引航 项目管理 推广与权衡"><div class="sentence-scene">💼 项目管理 · 推广与权衡</div><div class="sentence-en">Before the full rollout of the reclamation works, we must carefully weigh the trade-off between dredging speed and sediment control, and confirm the pilotage arrangement with the harbour authority.</div><div class="sentence-cn">在吹填工程全面推广之前，我们必须仔细权衡疏浚速度与淤积控制之间的取舍，并与港务局确认引航安排。</div><div class="sentence-notes-title">📝 重点词注释</div><div class="sentence-notes"><b>rollout</b> <em>/ˈroʊlaʊt/</em> — 推广；上线部署（将新系统/流程全面落地）。<br/><b>trade-off</b> <em>/ˈtreɪd ɒf/</em> — 权衡；取舍（在相互制约的目标间做平衡决策）。<br/><b>pilotage</b> <em>/ˈpaɪlətɪdʒ/</em> — 引航；由引航员引领船舶进出港的有偿服务。</div><div class="sentence-date">收录：2026-10-20</div></div><p class="footer">商务英语每日一句，积少成多，沟通更专业。</p>
+<div class="sentence-card" id="sent-94" data-en="Before backfilling, the site engineer confirmed the parapet and shoring met the stability criteria, then reported the safety KPI at the morning governance briefing." data-cn="回堵前，现场工程师确认防浪墙与支护满足稳定性标准，随后在晨间治理例会上汇报了安全关键绩效指标。" data-notes="parapet 防浪墙 shoring 支护 governance 治理 KPI 关键绩效指标 现场沟通 港口工程 项目管理">
+<div class="sentence-scene">🏗️ 现场沟通</div>
+<div class="sentence-en">Before backfilling, the site engineer confirmed the parapet and shoring met the stability criteria, then reported the safety KPI at the morning governance briefing.</div>
+<div class="sentence-cn">回堵前，现场工程师确认防浪墙与支护满足稳定性标准，随后在晨间治理例会上汇报了安全关键绩效指标。</div>
+<div class="sentence-notes-title">📝 重点词注释</div>
+<div class="sentence-notes">
+<b>parapet</b> <em>/ˈpærəpɪt/</em> — 防浪墙；码头/挡墙顶部矮墙，防坠兼防浪。<br/>
+<b>shoring</b> <em>/ˈʃɔːrɪŋ/</em> — 支护；开挖期临时支撑体系，防侧壁坍塌。<br/>
+<b>governance</b> <em>/ˈɡʌvənəns/</em> — 治理；项目决策与审批管控机制。
+  </div>
+<div class="sentence-date">收录：2026-10-21</div>
+<div class="sentence-card" id="sent-95" data-en="Before the reclamation bund is closed, we must align the change control process with the client and confirm the tide window for the value engineering proposal." data-cn="在吹填围堤合龙之前，我们必须就变更控制流程与业主达成一致，并确认价值工程方案的乘潮窗口。" data-notes="change control value engineering tide 变更控制 价值工程 潮汐 项目管理 变更与价值工程"><div class="sentence-scene">💼 项目管理 · 变更与价值工程</div><div class="sentence-en">Before the reclamation bund is closed, we must align the change control process with the client and confirm the tide window for the value engineering proposal.</div><div class="sentence-cn">在吹填围堤合龙之前，我们必须就变更控制流程与业主达成一致，并确认价值工程方案的乘潮窗口。</div><div class="sentence-notes-title">📝 重点词注释</div><div class="sentence-notes"><b>change control</b> <em>/tʃeɪndʒ kənˈtrəʊl/</em> — 变更控制；修改须按流程评估审批，防范围围蔓延与成本失控。<br/><b>value engineering</b> <em>/ˈvæljuː ˌendʒɪˈnɪərɪŋ/</em> — 价值工程；在保功能前提下优化设计、降低全寿命周期成本。<br/><b>tide</b> <em>/taɪd/</em> — 潮汐；决定乘潮窗口与可利用水深，影响施工与通航安排。</div><div class="sentence-date">收录：2026-10-22</div></div>
+<div class="sentence-card" id="sent-96" data-en="Before we sign off the dredging works, the contractor must demonstrate that all acceptance criteria for seabed level and residual settlement are met." data-cn="在我们签认疏浚工程之前，分包商必须证明海底面高程与工后沉降的全部验收标准均已满足。" data-notes="acceptance criteria residual settlement sign off 验收标准 工后沉降 签认 项目管理 验收与监测"><div class="sentence-scene">💼 项目管理 · 验收与监测</div><div class="sentence-en">Before we sign off the dredging works, the contractor must demonstrate that all acceptance criteria for seabed level and residual settlement are met.</div><div class="sentence-cn">在我们签认疏浚工程之前，分包商必须证明海底面高程与工后沉降的全部验收标准均已满足。</div><div class="sentence-notes-title">📝 重点词注释</div><div class="sentence-notes"><b>acceptance criteria</b> <em>/əkˈseptəns kraɪˈtɪəriə/</em> — 验收标准；交付合格的具体可度量条件。<br/><b>residual settlement</b> <em>/ˈrezɪdjuəl ˈsetlmənt/</em> — 工后沉降；建成后的剩余沉降。<br/><b>sign off</b> <em>/saɪn ɒf/</em> — 签字验收/签认。</div><div class="sentence-date">收录：2026-10-23</div></div></div></div><!-- /tab-sentences -->
+<div class="tab-content" id="tab-quiz">
+  <div class="section-title">📝 单词抽查 · 每日 10 题</div>
+  <div id="quizRoot"></div>
+</div>
 </div>
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">⬆</button>
 <script>
@@ -10306,10 +10445,14 @@ function switchTab(tab) {
   var btnWords = document.getElementById('tabBtnWords');
   var btnSentences = document.getElementById('tabBtnSentences');
   var btnToday = document.getElementById('tabBtnToday');
+  var btnQuiz = document.getElementById('tabBtnQuiz');
+  var quizTab = document.getElementById('tab-quiz');
   var searchInput = document.getElementById('searchInput');
 
   // 重置所有按钮
-  [btnWords, btnSentences, btnToday].forEach(function(b) { if (b) b.classList.remove('active'); });
+  [btnWords, btnSentences, btnToday, btnQuiz].forEach(function(b) { if (b) b.classList.remove('active'); });
+  // 隐藏所有 Tab 内容（含抽查）
+  [wordsTab, sentencesTab, quizTab].forEach(function(t) { if (t) t.classList.remove('active'); });
 
   if (tab === 'today') {
     // 今日更新视图：显示单词Tab（仅today卡片）+ 句子Tab（仅最新一句）
@@ -10332,6 +10475,18 @@ function switchTab(tab) {
       searchInput.disabled = false;
       searchInput.style.opacity = '';
     }
+  } else if (tab === 'quiz') {
+    wordsTab.classList.remove('active');
+    sentencesTab.classList.remove('active');
+    quizTab.classList.add('active');
+    if (btnQuiz) btnQuiz.classList.add('active');
+    if (searchInput) {
+      searchInput.value = '';
+      searchInput.placeholder = '🔍 单词抽查模式 — 搜索已禁用';
+      searchInput.disabled = true;
+      searchInput.style.opacity = '0.5';
+    }
+    startQuiz();
   } else {
     wordsTab.classList.remove('active');
     sentencesTab.classList.add('active');
@@ -10672,6 +10827,219 @@ function resetAllSentences() {
     init();
   }
 })();
+
+// ═══ 单词抽查（每日 10 题选择题） ═══
+var quizState = null;
+
+function shortMeaning(card) {
+  var m = card.querySelector('.word-meaning');
+  if (!m) return '';
+  var txt = m.textContent.trim();
+  var dash = txt.indexOf('——');
+  if (dash > 0) txt = txt.substring(0, dash);
+  // 只去掉末尾的括号注释（如"（task dependency：任务依赖…）"），正文完整保留，不再硬截断
+  var trail;
+  while ((trail = txt.match(/（[^（）]*）\s*$/))) txt = txt.substring(0, trail.index).trim();
+  txt = txt.replace(/[；;，,]\s*$/, '').trim();
+  return txt;
+}
+
+function todayStr() {
+  var d = new Date();
+  var y = d.getFullYear();
+  var m = ('0' + (d.getMonth() + 1)).slice(-2);
+  var day = ('0' + d.getDate()).slice(-2);
+  return y + '-' + m + '-' + day;
+}
+
+function hashStr(s) {
+  var h = 2166136261;
+  for (var i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function mulberry32(a) {
+  return function() {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    var t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+function shuffleArray(arr, rng) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(rng() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+function buildQuestions(rng) {
+  var cards = document.querySelectorAll('#tab-words .word-card');
+  var pool = [];
+  cards.forEach(function(c) {
+    var nameEl = c.querySelector('.word-name');
+    if (!nameEl) return;
+    var name = nameEl.textContent.trim();
+    var phonEl = c.querySelector('.word-phonetic');
+    var phon = phonEl ? phonEl.textContent.trim() : '';
+    var meaning = shortMeaning(c);
+    if (name && meaning) pool.push({ name: name, phon: phon, meaning: meaning });
+  });
+  if (pool.length < 10) return null;
+  var idxs = shuffleArray(pool.map(function(_, i) { return i; }), rng).slice(0, 10);
+  var chosen = idxs.map(function(i) { return pool[i]; });
+  var questions = [];
+  chosen.forEach(function(w, i) {
+    var type = i < 5 ? 'word2mean' : 'mean2word';
+    questions.push(buildQuestion(w, type, pool, rng));
+  });
+  return questions;
+}
+
+function buildQuestion(w, type, pool, rng) {
+  var others = pool.filter(function(p) { return p.name !== w.name; });
+  others = shuffleArray(others, rng);
+  var used = {};
+  used[type === 'word2mean' ? w.meaning : w.name] = true;
+  var distractors = [];
+  for (var k = 0; k < others.length && distractors.length < 3; k++) {
+    var candText = type === 'word2mean' ? others[k].meaning : others[k].name;
+    if (!used[candText]) { used[candText] = true; distractors.push(others[k]); }
+  }
+  var opts = [];
+  if (type === 'word2mean') {
+    opts.push({ text: w.meaning, correct: true });
+    distractors.forEach(function(d) { opts.push({ text: d.meaning, correct: false }); });
+  } else {
+    opts.push({ text: w.name, correct: true });
+    distractors.forEach(function(d) { opts.push({ text: d.name, correct: false }); });
+  }
+  opts = shuffleArray(opts, rng);
+  var correctIndex = 0;
+  for (var i = 0; i < opts.length; i++) { if (opts[i].correct) { correctIndex = i; break; } }
+  return {
+    type: type,
+    word: w.name,
+    phon: w.phon,
+    prompt: w.meaning,
+    options: opts.map(function(o) { return { text: o.text }; }),
+    correctIndex: correctIndex
+  };
+}
+
+function startQuiz() {
+  var root = document.getElementById('quizRoot');
+  if (!root) return;
+  var rng = mulberry32(hashStr(todayStr()));
+  var questions = buildQuestions(rng);
+  if (!questions) { root.innerHTML = '<p class="quiz-desc">单词数量不足，暂无法生成抽查。</p>'; return; }
+  quizState = { date: todayStr(), questions: questions, userAnswers: {}, score: 0 };
+  renderQuiz();
+}
+
+function reshuffleQuiz() {
+  var root = document.getElementById('quizRoot');
+  if (!root) return;
+  var questions = buildQuestions(Math.random);
+  if (!questions) return;
+  quizState = { date: todayStr() + ' · 随机', questions: questions, userAnswers: {}, score: 0 };
+  renderQuiz();
+}
+
+function renderQuiz() {
+  var root = document.getElementById('quizRoot');
+  root.innerHTML = '';
+  var q = quizState.questions;
+  var header = document.createElement('div');
+  header.className = 'quiz-header';
+  header.innerHTML = '<span class="quiz-date">📅 ' + quizState.date + ' 每日抽查</span>' +
+    '<span class="quiz-progress" id="quizScore">得分：0 / ' + q.length + '</span>';
+  root.appendChild(header);
+  var desc = document.createElement('p');
+  desc.className = 'quiz-desc';
+  desc.textContent = '共 ' + q.length + ' 题：第 1–5 题给出单词选中文释义，第 6–10 题给出释义选对应单词。每题 4 选 1，点击即判分。';
+  root.appendChild(desc);
+  q.forEach(function(item, idx) { root.appendChild(renderQuestion(item, idx)); });
+  var ctrl = document.createElement('div');
+  ctrl.className = 'quiz-controls';
+  ctrl.innerHTML = '<button class="quiz-btn" type="button" onclick="reshuffleQuiz()">🔄 换一批随机题</button>';
+  root.appendChild(ctrl);
+}
+
+function renderQuestion(item, idx) {
+  var wrap = document.createElement('div');
+  wrap.className = 'quiz-question';
+  var typeLabel = item.type === 'word2mean' ? '看单词 · 选释义' : '看释义 · 选单词';
+  var qtext;
+  if (item.type === 'word2mean') {
+    qtext = '<span class="quiz-word">' + escapeHtml(item.word) + '</span>' +
+            (item.phon ? ' <span class="quiz-phon">' + escapeHtml(item.phon) + '</span>' : '');
+  } else {
+    qtext = '<span class="quiz-meaning">' + escapeHtml(item.prompt) + '</span>';
+  }
+  wrap.innerHTML = '<div class="quiz-q-head">Q' + (idx + 1) + ' · ' + typeLabel + '</div>' +
+    '<div class="quiz-q-text">' + qtext + '</div>' +
+    '<div class="quiz-options"></div>';
+  var optBox = wrap.querySelector('.quiz-options');
+  item.options.forEach(function(opt, oi) {
+    var btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.type = 'button';
+    btn.textContent = opt.text;
+    btn.onclick = function() { chooseOption(idx, oi, optBox); };
+    optBox.appendChild(btn);
+  });
+  return wrap;
+}
+
+function chooseOption(qIdx, oIdx, optBox) {
+  if (quizState.userAnswers[qIdx] !== undefined) return;
+  var item = quizState.questions[qIdx];
+  quizState.userAnswers[qIdx] = oIdx;
+  var correctIdx = item.correctIndex;
+  var btns = optBox.querySelectorAll('.quiz-option');
+  optBox.classList.add('answered');
+  btns.forEach(function(b, i) {
+    b.disabled = true;
+    if (i === correctIdx) b.classList.add('correct');
+    else if (i === oIdx) b.classList.add('wrong');
+  });
+  if (oIdx === correctIdx) quizState.score++;
+  updateQuizScore();
+  if (Object.keys(quizState.userAnswers).length === quizState.questions.length) showQuizFinal();
+}
+
+function updateQuizScore() {
+  var el = document.getElementById('quizScore');
+  if (el) el.textContent = '得分：' + quizState.score + ' / ' + quizState.questions.length;
+}
+
+function showQuizFinal() {
+  var root = document.getElementById('quizRoot');
+  var old = document.getElementById('quizFinal');
+  if (old) old.parentNode.removeChild(old);
+  var total = quizState.questions.length;
+  var pct = Math.round(quizState.score / total * 100);
+  var msg = quizState.score === total ? '🎉 满分！今天记性不错。' :
+            (pct >= 60 ? '👍 过关，再巩固一下错题。' : '📚 还需努力，明天继续。');
+  var banner = document.createElement('div');
+  banner.className = 'quiz-final';
+  banner.id = 'quizFinal';
+  banner.textContent = '本次得分 ' + quizState.score + ' / ' + total + '（' + pct + '%） ' + msg;
+  root.appendChild(banner);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function(c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
 </script>
 </body>
 </html>
